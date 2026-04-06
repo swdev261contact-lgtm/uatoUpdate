@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import {
-  History, Target, Eye, Award, TrendingUp, Users,
-  Heart, Lightbulb, Shield, BookOpen
-} from 'lucide-react';
+import { History, Target, Eye, TrendingUp, Users, Heart, Lightbulb, Shield, BookOpen, Sparkles } from 'lucide-react';
 import historyImg from '../assets/hero.png';
 import visionImg from '../assets/VieEtudiante3.jpg';
 import miniLogoUpa from '../assets/UPAlogo.jpg';
@@ -65,8 +62,6 @@ const stats = [
   { value: 8, label: 'Parcours', suffix: '+' },
 ];
 
-const parseNumber = str => Number(str.replace(/[^\d]/g, ''));
-
 function CountUpCard({ value, label, suffix, animate }) {
   const count = useCountUp(value, 1500, animate);
 
@@ -80,7 +75,7 @@ function CountUpCard({ value, label, suffix, animate }) {
       <div className="absolute inset-0 bg-gradient-to-br from-primary-600 to-accent-gold opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-300" />
       <div className="relative bg-white dark:bg-dark-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-dark-700 text-center">
         <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-600 to-accent-gold bg-clip-text text-transparent mb-2">
-          {suffix === '+' ? `${count}${suffix}` : `${count}${suffix}`}
+          {count}{suffix}
         </h2>
         <p className="text-sm font-medium text-gray-600 dark:text-gray-400">{label}</p>
       </div>
@@ -92,25 +87,25 @@ const values = [
   {
     icon: TrendingUp,
     title: "Excellence et Amélioration Continue",
-    desc: "Nous visons l'excellence académique dans chaque programme. Notre engagement envers l'amélioration continue garantit que nos étudiants reçoivent une formation de pointe, alignée sur les standards internationaux et les besoins du marché.",
+    desc: "Nous visons l'excellence académique dans chaque programme. Notre engagement envers l'amélioration continue garantit que nos étudiants reçoivent une formation de pointe.",
     gradient: "from-blue-500 to-cyan-500"
   },
   {
     icon: Heart,
     title: "Ouverture et Respect",
-    desc: "La diversité est notre force. Nous célébrons les différences culturelles et les perspectives uniques de chaque étudiant, créant un environnement inclusif où chacun peut s'épanouir et contribuer.",
+    desc: "La diversité est notre force. Nous célébrons les différences culturelles et les perspectives uniques de chaque étudiant, créant un environnement inclusif.",
     gradient: "from-pink-500 to-rose-500"
   },
   {
     icon: Lightbulb,
     title: "Innovation et Créativité",
-    desc: "L'innovation est au cœur de notre pédagogie. Nous encourageons la curiosité intellectuelle et la pensée créative, préparant nos étudiants à devenir des pionniers dans leurs domaines respectifs.",
+    desc: "L'innovation est au cœur de notre pédagogie. Nous encourageons la curiosité intellectuelle et la pensée créative.",
     gradient: "from-yellow-500 to-orange-500"
   },
   {
     icon: Shield,
     title: "Professionnalisme et Intégrité",
-    desc: "L'éthique professionnelle et l'intégrité sont les fondements de notre institution. Nous formons des leaders responsables, guidés par des valeurs morales solides et un engagement envers l'excellence.",
+    desc: "L'éthique professionnelle et l'intégrité sont les fondements de notre institution. Nous formons des leaders responsables.",
     gradient: "from-green-500 to-emerald-500"
   },
 ];
@@ -159,19 +154,17 @@ const About = () => {
             <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
               <p>
                 Fondée en <span className="font-semibold text-primary-600 dark:text-primary-400">2021</span>,
-                l'Université Privée d\'Ambohidratrimo est née d'une vision ambitieuse : démocratiser
+                l'Université Privée d'Ambohydratrimo est née d'une vision ambitieuse : démocratiser
                 l'accès à une éducation supérieure de qualité pour tous les jeunes malgaches.
               </p>
               <p>
                 Démarrant avec deux programmes et une cinquantaine d'étudiants passionnés, l'UPA s'est
-                rapidement imposée comme une référence dans le paysage éducatif malgache, combinant
-                excellence académique et innovation pédagogique.
+                rapidement imposée comme une référence dans le paysage éducatif malgache.
               </p>
               <p>
                 Aujourd'hui, avec <span className="font-semibold text-primary-600 dark:text-primary-400">trois écoles spécialisées</span> et
                 plus de <span className="font-semibold text-primary-600 dark:text-primary-400">200 étudiants</span>, nous continuons
-                d'évoluer en créant des partenariats stratégiques avec des institutions internationales
-                pour offrir à nos étudiants les meilleures opportunités de carrière.
+                d'évoluer en créant des partenariats stratégiques.
               </p>
             </div>
           </motion.div>
@@ -236,8 +229,7 @@ const About = () => {
               </div>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                 Fournir une éducation supérieure de qualité exceptionnelle, accessible à tous les étudiants
-                malgaches, avec des programmes innovants qui allient excellence académique, compétences
-                pratiques et valeurs éthiques pour former les professionnels et leaders de demain.
+                malgaches, avec des programmes innovants qui allient excellence académique et valeurs éthiques.
               </p>
             </div>
 
@@ -250,9 +242,7 @@ const About = () => {
               </div>
               <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                 Devenir l'institution de référence dans l'enseignement supérieur à Madagascar et dans
-                l'océan Indien, reconnue pour son excellence pédagogique, son innovation et sa contribution
-                au développement socio-économique du pays en formant des diplômés compétents, engagés et
-                prêts à relever les défis du XXIe siècle.
+                l'océan Indien, reconnue pour son excellence pédagogique et son innovation.
               </p>
             </div>
           </motion.div>
@@ -268,9 +258,6 @@ const About = () => {
             <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
               Nos Valeurs Fondamentales
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Des principes qui guident notre mission éducative et façonnent l'expérience de nos étudiants
-            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">

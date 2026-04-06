@@ -142,7 +142,18 @@ const VieEtudiante = () => {
   const openModal = (content) => setActiveModal(content);
   const closeModal = () => setActiveModal(null);
 
-    const scrollLeft = () => {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        if (selectedImage) setSelectedImage(null);
+        else if (activeModal) closeModal();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeModal, selectedImage]);
+
+  const scrollLeft = () => {
     if (containerRef.current) {
       const cardWidth = containerRef.current.querySelector('div').offsetWidth + 16;
       containerRef.current.scrollBy({ left: -cardWidth, behavior: 'smooth' });
@@ -356,17 +367,20 @@ const VieEtudiante = () => {
             {galleryImages.map((img) => (
               <motion.div
                 key={img.id}
-                className="relative rounded overflow-hidden cursor-pointer shadow"
-                whileHover={{ scale: 1.02 }}
+                className="relative rounded-lg overflow-hidden cursor-pointer shadow-lg group"
+                whileHover={{ scale: 1.02, y: -4 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => setSelectedImage(img)}
               >
                 <img
                   src={img.src}
                   alt={img.title}
-                  className="w-full h-40 object-cover"
+                  className="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 opacity-0 hover:opacity-100 transition">
-                  {img.title}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                  <p className="text-white font-medium text-sm">{img.title}</p>
+                  <p className="text-white/80 text-xs">{img.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -377,7 +391,7 @@ const VieEtudiante = () => {
         <AnimatePresence>
           {activeModal && (
             <motion.div
-              className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4"
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[60] p-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -408,17 +422,17 @@ const VieEtudiante = () => {
         <AnimatePresence>
           {selectedImage && (
             <motion.div
-              className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4"
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[60] p-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedImage(null)}
             >
               <motion.div
-                className="relative max-w-3xl w-full max-h-[80vh] overflow-y-auto"
-                initial={{ scale: 0.9 }}
-                animate={{ scale: 1 }}
-                exit={{ scale: 0.9 }}
+                className="relative max-w-4xl w-full"
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className="flex items-center justify-between mb-4">
@@ -427,20 +441,28 @@ const VieEtudiante = () => {
                   </h4>
                   <button
                     onClick={() => setSelectedImage(null)}
-                    className="text-white text-2xl"
+                    className="p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
                   >
-                    <X size={24} />
+                    <X size={24} className="text-white" />
                   </button>
                 </div>
-                <img
+                <motion.img
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
                   src={selectedImage.src}
                   alt={selectedImage.title}
-                  className="w-full object-contain rounded mb-4"
+                  className="w-full max-h-[70vh] object-contain rounded-lg shadow-2xl"
                 />
                 {selectedImage.description && (
-                  <p className="mt-4 text-center text-white">
+                  <motion.p 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className="mt-4 text-center text-white/90 text-lg"
+                  >
                     {selectedImage.description}
-                  </p>
+                  </motion.p>
                 )}
               </motion.div>
             </motion.div>

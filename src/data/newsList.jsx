@@ -1,13 +1,24 @@
 import sortieHecm from '../assets/sortieHecm.jpg';
-import conferenceia from '../assets/iaConference.jpg';
 import conferenceOratoire from '../assets/conferenceOratoire.jpg'
 import hack1 from '../assets/robo2.jpg';
 import smatching from '../assets/sport.jpg';
 import laureatAF from '../assets/laureatAF.jpg';
 import tech from '../assets/market.jpg';
 import confBasket from '../assets/conferenceBasket.jpg';
+import conIAUR from '../assets/urchadeIA.jpg';
 
 export const newsList = [
+  { type: 'Événement', date: '15 Avril 2026', title: "Conférence - High-Performance Task-Specific Language Models", description: "Conférence exceptionnelle avec Dr Urchade Zaratiana (Fastino Labs) sur les modèles de langue compacts et efficaces.", image: conIAUR, important: 'OBLIGATOIRE : HEST INFO', details: [
+        "Alternative aux LLMs",
+        "Modèles compacts et efficaces",
+        "Architectures multi-tâches",
+        "Automatisation du machine learning",
+        "Intervenant: Dr Urchade Zaratiana",
+        "Role: Member of Technical Staff @ Fastino Labs",
+        "Lieu: Salle HECM L2",
+        "Heure: 14:00"
+      ]
+    },
   { type: 'Événement', date: '30 Mai 2025', title: "Conférence sur l'art oratoire", description: "Une conférence exceptionnelle sur l'éloquence et l'authenticité.", image: conferenceOratoire, details: [
         "L'Université privée d'Ambohidratrimo a eu l'immense honneur d'acceilllir une CONFERENCE EXEPTIONNELLE",
         "Eloquence et authenticité : Trouver votre voix intérieur",

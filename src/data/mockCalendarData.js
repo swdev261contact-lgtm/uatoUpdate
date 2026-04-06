@@ -147,23 +147,38 @@ export const mockSchedules = [
 export const mockEvents = [
   {
     id: 1,
-    title: 'Rentrée académique 2025',
-    description: 'Début de l\'année académique pour tous les niveaux',
-    event_date: '2025-11-10',
-    event_type: 'ACADEMIQUE'
+    title: 'Conférence - High-Performance Task-Specific Language Models',
+    description: 'Conférence exceptionnelle avec Dr Urchade Zaratiana (Fastino Labs). Thèmes: Alternative aux LLMs, Modèles compacts et efficaces, Architectures multi-tâches, Automatisation du machine learning.',
+    event_date: '2026-04-15',
+    event_time: '14:00',
+    event_location: 'Salle HECM L2',
+    event_type: 'ACADEMIQUE',
+    speaker: {
+      name: 'Dr Urchade Zaratiana',
+      role: 'Member of Technical Staff',
+      company: 'Fastino Labs'
+    },
+    important_note: 'OBLIGATOIRE : HEST INFO'
   },
   {
     id: 2,
-    title: 'Examens du Répechage',
-    description: 'Période des examens finaux du premier semestre',
-    event_date: '2025-11-10',
+    title: 'Journée Portes Ouvertes 2026',
+    description: 'Venez découvrir nos formations, rencontrer nos enseignants et explorer notre campus. Une opportunité unique pour avenir votre futur académique.',
+    event_date: '2026-05-15',
     event_type: 'ACADEMIQUE'
   },
   {
     id: 3,
-    title: 'Sortie de promotion 2025',
-    description: 'Cérémonie officielle de sortie pour les diplômés de 2025',
-    event_date: '2025-11-22',
+    title: 'Rentrée académique 2026',
+    description: 'Début de l\'année académique pour tous les niveaux. Inscriptions et formalités administratives.',
+    event_date: '2026-09-01',
+    event_type: 'ACADEMIQUE'
+  },
+  {
+    id: 4,
+    title: 'Forum des Partenaires 2026',
+    description: 'Rencontrez nos partenaires企业家 et découvre les opportunités de stage et d\'emploi.',
+    event_date: '2026-04-20',
     event_type: 'ADMINISTRATIF'
   }
 ];

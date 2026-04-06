@@ -1,8 +1,8 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
   ArrowUp, Mail, Moon, Sun, MapPin, Phone, Facebook, Instagram
 } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 import logo from '../assets/logo.png';
 import toujoursPlusHaut from '../assets/toujoursPlusHaut.PNG';
 import ChatBotAssistant from './ChatBotAssistant';
@@ -11,13 +11,13 @@ const Footer = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const savedMode = localStorage.getItem("darkMode") === "true";
     setIsDarkMode(savedMode);
     if (savedMode) document.documentElement.classList.add("dark");
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const handleScroll = () => {
       setIsVisible(window.scrollY > 200);
     };
@@ -40,14 +40,12 @@ const Footer = () => {
     {
       name: 'Facebook',
       icon: Facebook,
-      url: 'https://www.facebook.com/p/Universit%C3%A9-priv%C3%A9e-dAmbohidratrimo-100075729058011',
-      color: 'hover:text-blue-600 dark:hover:text-blue-400'
+      url: 'https://www.facebook.com/p/Universit%C3%A9-priv%C3%A9e-dAmbohydratrimo-100075729058011',
     },
     {
       name: 'Instagram',
       icon: Instagram,
       url: 'https://www.instagram.com/universitepriveeambohidratrimo/',
-      color: 'hover:text-pink-600 dark:hover:text-pink-400'
     }
   ];
 
@@ -66,7 +64,7 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-sm text-gray-400 leading-relaxed">
-              L'Université Privée d'Ambohidratrimo forme les leaders de demain à travers
+              L'Université Privée d'Ambohydratrimo forme les leaders de demain à travers
               une éducation d'excellence et innovante.
             </p>
             <div className="flex gap-4">
@@ -78,7 +76,7 @@ const Footer = () => {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-2 bg-dark-800 hover:bg-dark-700 rounded-lg transition-all duration-300 ${social.color}`}
+                    className="p-2 bg-dark-800 hover:bg-dark-700 rounded-lg transition-all duration-300"
                     aria-label={social.name}
                   >
                     <Icon className="w-5 h-5" />
@@ -127,7 +125,7 @@ const Footer = () => {
               <MapPin className="w-5 h-5 text-primary-400 flex-shrink-0 mt-0.5" />
               <p className="text-gray-400">
                 Lot 77 Ambohitsiroa, RN4<br />
-                15 min de Shell Ambohidratrimo<br />
+                15 min de Shell Ambohydratrimo<br />
                 Antananarivo, Madagascar
               </p>
             </div>
@@ -146,20 +144,12 @@ const Footer = () => {
 
             <div className="flex items-start gap-3 text-sm">
               <Mail className="w-5 h-5 text-primary-400 flex-shrink-0 mt-0.5" />
-              <div className="space-y-1">
-                <a
-                  href="mailto:universitepriveambohidratrimo@gmail.com"
-                  className="text-gray-400 hover:text-primary-400 transition-colors block break-all"
-                >
-                  universitepriveambohidratrimo@gmail.com
-                </a>
-                <a
-                  href="mailto:viescolaire.upa@gmail.com"
-                  className="text-gray-400 hover:text-primary-400 transition-colors block"
-                >
-                  viescolaire.upa@gmail.com
-                </a>
-              </div>
+              <a
+                href="mailto:universitepriveambohidratrimo@gmail.com"
+                className="text-gray-400 hover:text-primary-400 transition-colors block"
+              >
+                universitepriveambohidratrimo@gmail.com
+              </a>
             </div>
           </div>
         </div>
@@ -167,7 +157,7 @@ const Footer = () => {
         <div className="border-t border-dark-800 pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-gray-500 text-center md:text-left">
-              &copy; {new Date().getFullYear()} Université Privée d'Ambohidratrimo. Tous droits réservés.
+              &copy; {new Date().getFullYear()} Université Privée d'Ambohydratrimo. Tous droits réservés.
             </p>
             <img
               src={toujoursPlusHaut}
@@ -178,7 +168,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3">
         <ChatBotAssistant />
 
         {isVisible && (
