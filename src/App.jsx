@@ -15,7 +15,7 @@ const App = () => {
       {/* Notif */}
       <Toaster position="top-center" reverseOrder={false} />
       <ScrollToTop />
-      <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 duration-700 transition-all ease-in-out">
+      <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900 duration-700 transition-all ease-in-out pt-16">
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Contenue />} />

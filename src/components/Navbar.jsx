@@ -54,19 +54,44 @@ const navLinksByType = {
 
 const Navbar = ({ type = 'home' }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState(
     type === 'listeNews' ? '' : navLinksByType[type]?.find(link => link.type === 'anchor')?.href || ''
   );
   const observer = useRef(null);
+  const lastScrollY = useRef(0);
+  const scrollDirection = useRef('down');
 
   const closeMenu = () => setIsOpen(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+
+      // Show navbar at the top
+      if (currentScrollY < 50) {
+        setVisible(true);
+        setScrolled(false);
+      } else {
+        setScrolled(true);
+
+        // Determine scroll direction
+        if (currentScrollY > lastScrollY.current) {
+          // Scrolling down
+          scrollDirection.current = 'down';
+          setVisible(false);
+        } else {
+          // Scrolling up
+          scrollDirection.current = 'up';
+          setVisible(true);
+        }
+      }
+
+      lastScrollY.current = currentScrollY;
     };
-    window.addEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -113,10 +138,10 @@ const Navbar = ({ type = 'home' }) => {
               setActiveSection(href);
               closeMenu();
             }}
-            className={`hidden lg:block px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+            className={`hidden lg:block px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-300 ${
               isActive
-                ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-                : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-dark-800'
+                ? 'text-primary-600 dark:text-primary-400 border-b-2 border-primary-600 dark:border-primary-400'
+                : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400'
             }`}
           >
             {label}
@@ -146,7 +171,7 @@ const Navbar = ({ type = 'home' }) => {
           <RouterLink
             to={href}
             onClick={closeMenu}
-            className="hidden lg:block px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-dark-800 transition-all duration-300"
+            className="hidden lg:block px-3 py-1.5 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300"
           >
             {label}
           </RouterLink>
@@ -171,7 +196,7 @@ const Navbar = ({ type = 'home' }) => {
               setActiveSection('admissions');
               closeMenu();
             }}
-            className="hidden lg:inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="hidden lg:inline-flex items-center gap-2 px-5 py-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
           >
             <GraduationCap className="w-4 h-4" />
             {label}
@@ -183,7 +208,7 @@ const Navbar = ({ type = 'home' }) => {
               setActiveSection('admissions');
               closeMenu();
             }}
-            className="block lg:hidden w-full text-center px-6 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white text-base font-semibold rounded-lg shadow-lg transition-all duration-300"
+            className="block lg:hidden w-full text-center px-6 py-4 bg-primary-600 text-white text-base font-semibold rounded-lg shadow-lg transition-all duration-300"
           >
             {label}
           </RouterLink>
@@ -193,47 +218,52 @@ const Navbar = ({ type = 'home' }) => {
   };
 
   return (
-    <header
-      className={`sticky top-0 z-50 transition-all duration-500 ${
+    <motion.header
+      initial={{ y: 0 }}
+      animate={{ y: visible ? 0 : -100 }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'bg-white/95 dark:bg-dark-900/95 backdrop-blur-lg shadow-lg'
-          : 'bg-white/90 dark:bg-dark-900/90 backdrop-blur-md shadow-md'
+          ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-md'
+          : 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm'
       }`}
     >
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
-          <RouterLink to="/" className="flex items-center gap-3 group">
-            <div className={`relative transition-all duration-300 ${scrolled ? 'w-12' : 'w-14'}`}>
-              <div className="absolute inset-0 bg-primary-600 opacity-0 group-hover:opacity-20 rounded-full blur-xl transition-opacity duration-300" />
+        <div className="flex items-center justify-between h-16">
+          {/* Logo & Brand */}
+          <RouterLink to="/" className="flex items-center gap-2 group flex-shrink-0">
+            <div className={`relative transition-all duration-300 ${scrolled ? 'w-10' : 'w-12'}`}>
               <img
                 src={logo}
                 alt="Logo UPA"
-                className="relative w-full h-auto transition-transform duration-300 group-hover:scale-110"
+                className="w-full h-auto"
               />
             </div>
-            <div>
-              <h1 className={`font-bold bg-gradient-to-r from-primary-600 to-primary-800 dark:from-primary-400 dark:to-primary-600 bg-clip-text text-transparent transition-all duration-300 ${
-                scrolled ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'
+            <div className="hidden sm:block">
+              <h1 className={`font-bold bg-gradient-to-r from-primary-600 to-primary-800 dark:from-primary-400 dark:to-primary-600 bg-clip-text text-transparent transition-all duration-300 leading-tight ${
+                scrolled ? 'text-xs' : 'text-sm'
               }`}>
-                Université Privée d'Ambohidratrimo
+                UPA
               </h1>
               <p className={`uppercase font-semibold text-gray-500 dark:text-gray-400 transition-all duration-300 ${
-                scrolled ? 'text-[0.6rem]' : 'text-xs'
+                scrolled ? 'text-[0.5rem]' : 'text-[0.65rem]'
               }`}>
                 Toujours Plus Haut
               </p>
             </div>
           </RouterLink>
 
+          {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2 text-primary-600 dark:text-primary-400 hover:bg-gray-100 dark:hover:bg-dark-800 rounded-lg transition-colors duration-300"
+            className="lg:hidden p-2 text-primary-600 dark:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-300"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-          <nav className="hidden lg:flex items-center gap-2">
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-1">
             {navLinksByType[type]?.map((link) => (
               <div key={link.href}>{renderLink(link)}</div>
             ))}
@@ -241,10 +271,11 @@ const Navbar = ({ type = 'home' }) => {
         </div>
       </div>
 
+      {/* Mobile Navigation */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -257,12 +288,12 @@ const Navbar = ({ type = 'home' }) => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className="fixed inset-0 h-screen right-0 w-full max-w-sm bg-white dark:bg-dark-900 shadow-2xl overflow-y-auto"
+              className="fixed inset-0 h-screen right-0 w-full max-w-sm bg-white dark:bg-gray-900 shadow-2xl overflow-y-auto"
             >
               <div className="p-6">
                 <div className="flex items-center justify-between mb-8">
                   <div className="flex items-center gap-3">
-                    <img src={logo} alt="Logo UPA" className="w-12" />
+                    <img src={logo} alt="Logo UPA" className="w-10" />
                     <div>
                       <h2 className="font-bold text-primary-600 dark:text-primary-400 text-lg">UPA</h2>
                       <p className="text-xs text-gray-500 dark:text-gray-400">Menu</p>
@@ -270,7 +301,7 @@ const Navbar = ({ type = 'home' }) => {
                   </div>
                   <button
                     onClick={closeMenu}
-                    className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-dark-800 rounded-lg transition-colors"
+                    className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
                   >
                     <X size={24} />
                   </button>
@@ -286,7 +317,7 @@ const Navbar = ({ type = 'home' }) => {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 };
 
