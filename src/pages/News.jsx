@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { X, Menu, Search } from 'lucide-react';
+import { X, Menu, Search, ImageOff } from 'lucide-react';
 import { newsList } from '../data/newsList';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../components/Navbar';
@@ -12,6 +12,7 @@ const News = () => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [imageErrors, setImageErrors] = useState({});
 
   // Extract unique categories and tags
   const categories = [...new Set(newsList.map((item) => item.category))];
@@ -41,6 +42,10 @@ const News = () => {
     setSelectedCategory('');
     setSelectedTags([]);
     setSearchQuery('');
+  };
+
+  const handleImageError = (idx) => {
+    setImageErrors((prev) => ({ ...prev, [idx]: true }));
   };
 
   return (
@@ -236,15 +241,22 @@ const News = () => {
               </motion.button>
 
               {/* Header with Image */}
-              <div className="relative h-80 overflow-hidden">
-                <motion.img
-                  initial={{ scale: 1.1 }}
-                  animate={{ scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                  src={newsList[openIdx].image}
-                  alt={newsList[openIdx].title}
-                  className="w-full h-full object-cover"
-                />
+              <div className="relative h-80 overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600">
+                {!imageErrors[openIdx] && newsList[openIdx].image ? (
+                  <motion.img
+                    initial={{ scale: 1.1 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    src={newsList[openIdx].image}
+                    alt={newsList[openIdx].title}
+                    onError={() => handleImageError(openIdx)}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <ImageOff size={64} className="text-gray-400 dark:text-gray-500" />
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50" />
                 <div className="absolute bottom-4 left-6 right-6">
                   <motion.span

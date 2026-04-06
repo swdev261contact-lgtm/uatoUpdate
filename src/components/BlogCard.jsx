@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Clock, User } from 'lucide-react';
+import { ArrowRight, ImageOff, User } from 'lucide-react';
 
 const BlogCard = ({ news, idx, onClick }) => {
+  const [imageError, setImageError] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -13,12 +15,19 @@ const BlogCard = ({ news, idx, onClick }) => {
       className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer group"
     >
       {/* Image Container */}
-      <div className="relative h-48 overflow-hidden">
-        <img
-          src={news.image}
-          alt={news.title}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-        />
+      <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600">
+        {!imageError && news.image ? (
+          <img
+            src={news.image}
+            alt={news.title}
+            onError={() => setImageError(true)}
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <ImageOff size={48} className="text-gray-400 dark:text-gray-500" />
+          </div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
