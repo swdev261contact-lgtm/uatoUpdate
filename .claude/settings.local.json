@@ -7,7 +7,11 @@
       "Bash(curl -s http://localhost:5173/)",
       "mcp__Claude_in_Chrome__tabs_context_mcp",
       "Bash(grep -o \"'[^']*': \\\\`\" src/data/newsList.jsx)",
-      "Bash(grep -c \"navigate\\(\\\\`/blog\" src/components/BlogCard.jsx)"
+      "Bash(grep -c \"navigate\\(\\\\`/blog\" src/components/BlogCard.jsx)",
+      "Bash(xargs grep *)",
+      "Bash(node -c src/components/About.jsx)",
+      "Bash(echo \"Exit code: $?\")",
+      "Bash(npx eslint *)"
     ]
   }
 }
