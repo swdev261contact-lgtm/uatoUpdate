@@ -69,23 +69,13 @@ const Navbar = ({ type = 'home' }) => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      // Show navbar at the top
-      if (currentScrollY < 50) {
-        setVisible(true);
-        setScrolled(false);
-      } else {
-        setScrolled(true);
+      // Always show navbar, but change style
+      setVisible(true);
 
-        // Determine scroll direction
-        if (currentScrollY > lastScrollY.current) {
-          // Scrolling down
-          scrollDirection.current = 'down';
-          setVisible(false);
-        } else {
-          // Scrolling up
-          scrollDirection.current = 'up';
-          setVisible(true);
-        }
+      if (currentScrollY > 20) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
       }
 
       lastScrollY.current = currentScrollY;
