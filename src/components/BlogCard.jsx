@@ -1,9 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ImageOff, User } from 'lucide-react';
 
 const BlogCard = ({ news, idx, onClick }) => {
+  const navigate = useNavigate();
   const [imageError, setImageError] = useState(false);
+
+  // Generate slug from title
+  const slug = useMemo(() => {
+    return news.title
+      .toLowerCase()
+      .replace(/[éèêë]/g, 'e')
+      .replace(/[àâä]/g, 'a')
+      .replace(/[ôö]/g, 'o')
+      .replace(/[ù]/g, 'u')
+      .replace(/[ç]/g, 'c')
+      .replace(/[:']/g, '')
+      .replace(/\s+/g, '-');
+  }, [news.title]);
+
+  const handleClick = () => {
+    navigate(`/blog/${slug}`);
+  };
 
   return (
     <motion.div
@@ -11,7 +30,7 @@ const BlogCard = ({ news, idx, onClick }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: idx * 0.1 }}
       whileHover={{ scale: 1.05, shadow: '0 20px 25px rgba(0,0,0,0.15)' }}
-      onClick={onClick}
+      onClick={handleClick}
       className="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer group"
     >
       {/* Image Container */}

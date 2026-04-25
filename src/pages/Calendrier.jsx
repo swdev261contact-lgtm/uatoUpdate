@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar as CalendarIcon, ArrowRight, Filter, Clock, MapPin } from 'lucide-react';
+import { CalendarMonth } from '@mui/icons-material';
 import Navbar from '../components/Navbar';
 import { newsList } from '../data/newsList';
 import BlogCard from '../components/BlogCard';
@@ -51,7 +52,7 @@ const Calendrier = () => {
 
   return (
     <>
-      <Navbar type="calendrier" />
+      <Navbar type="blog" />
 
       <motion.div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
         {/* Hero Section */}
@@ -73,9 +74,9 @@ const Calendrier = () => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-block mb-4 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold"
+              className="inline-block mb-4 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold flex items-center gap-2"
             >
-              📅 Calendrier des Événements
+              <CalendarMonth sx={{ fontSize: 20 }} /> Calendrier des Événements
             </motion.div>
 
             <motion.h1

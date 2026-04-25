@@ -11,7 +11,7 @@ const navLinksByType = {
     { href: 'programmes', label: 'Programmes', type: 'anchor' },
     { href: 'partenariat', label: 'Partenaires', type: 'anchor' },
     { href: '/vie-etudiante', label: 'Vie étudiante', type: 'route' },
-    { href: '/calendrier', label: 'Calendrier', type: 'route' },
+    { href: '/actualites', label: 'Blog', type: 'route' },
     { href: '/admission', label: "S'inscrire", type: 'button' },
   ],
   vieEtudiante: [
@@ -20,7 +20,7 @@ const navLinksByType = {
     { href: '/#programmes', label: 'Programmes', type: 'route' },
     { href: '/#partenariat', label: 'Partenaires', type: 'route' },
     { href: '/vie-etudiante', label: 'Vie étudiante', type: 'route' },
-    { href: '/calendrier', label: 'Calendrier', type: 'route' },
+    { href: '/actualites', label: 'Blog', type: 'route' },
     { href: '/admission', label: "S'inscrire", type: 'button' },
   ],
   admission: [
@@ -29,7 +29,7 @@ const navLinksByType = {
     { href: '/#programmes', label: 'Programmes', type: 'route' },
     { href: '/#partenariat', label: 'Partenaires', type: 'route' },
     { href: '/vie-etudiante', label: 'Vie étudiante', type: 'route' },
-    { href: '/calendrier', label: 'Calendrier', type: 'route' },
+    { href: '/actualites', label: 'Blog', type: 'route' },
     { href: '/admission', label: "S'inscrire", type: 'button' },
   ],
   listeNews: [
@@ -38,16 +38,16 @@ const navLinksByType = {
     { href: '/#programmes', label: 'Programmes', type: 'route' },
     { href: '/#partenariat', label: 'Partenaires', type: 'route' },
     { href: '/vie-etudiante', label: 'Vie étudiante', type: 'route' },
-    { href: '/calendrier', label: 'Calendrier', type: 'route' },
+    { href: '/actualites', label: 'Blog', type: 'route' },
     { href: '/admission', label: "S'inscrire", type: 'button' },
   ],
-  calendrier: [
+  blog: [
     { href: '/', label: 'Accueil', type: 'route' },
     { href: '/#a-propos', label: 'À propos', type: 'route' },
     { href: '/#programmes', label: 'Programmes', type: 'route' },
     { href: '/#partenariat', label: 'Partenaires', type: 'route' },
     { href: '/vie-etudiante', label: 'Vie étudiante', type: 'route' },
-    { href: '/calendrier', label: 'Calendrier', type: 'route' },
+    { href: '/actualites', label: 'Blog', type: 'route' },
     { href: '/admission', label: "S'inscrire", type: 'button' },
   ],
 };

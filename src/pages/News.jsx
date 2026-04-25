@@ -1,10 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { X, Menu, Search, ImageOff } from 'lucide-react';
+import { Newspaper, LocalOffer, Star, CalendarMonth, Article } from '@mui/icons-material';
 import { newsList } from '../data/newsList';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import BlogCard from '../components/BlogCard';
 import BlogSidebar from '../components/BlogSidebar';
+import bdsBackground from '../assets/BDS.jpg';
 
 const News = () => {
   const [openIdx, setOpenIdx] = useState(null);
@@ -50,7 +52,7 @@ const News = () => {
 
   return (
     <>
-      <Navbar type="listeNews" />
+      <Navbar type="blog" />
 
       <motion.div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
         {/* Hero Section */}
@@ -58,13 +60,22 @@ const News = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
-          className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-pink-500 text-white"
+          className="relative overflow-hidden text-white"
+          style={{
+            backgroundImage: `url(${bdsBackground})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed'
+          }}
         >
+          {/* Dark overlay with gradient */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/70" />
+
           {/* Animated Background Elements */}
           <motion.div
             animate={{
               y: [0, -20, 0],
-              opacity: [0.3, 0.5, 0.3]
+              opacity: [0.15, 0.25, 0.15]
             }}
             transition={{ duration: 8, repeat: Infinity }}
             className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"
@@ -72,91 +83,96 @@ const News = () => {
           <motion.div
             animate={{
               y: [0, 20, 0],
-              opacity: [0.3, 0.5, 0.3]
+              opacity: [0.15, 0.25, 0.15]
             }}
             transition={{ duration: 10, repeat: Infinity, delay: 1 }}
             className="absolute bottom-0 left-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -ml-40 -mb-40"
           />
 
-          <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 md:py-32">
+          <div className="relative z-10 max-w-7xl mx-auto px-6 py-28 md:py-40 lg:py-48">
             {/* Main Content */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              {/* Left Side */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="max-w-3xl"
+            >
               <motion.div
-                initial={{ opacity: 0, x: -40 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="inline-block mb-6 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold flex items-center gap-2"
               >
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                  className="inline-block mb-4 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold"
-                >
-                  📰 Blog & Actualités
-                </motion.div>
-
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                  className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
-                >
-                  Actualités & Événements
-                </motion.h1>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.4 }}
-                  className="text-xl text-blue-100 mb-8 leading-relaxed max-w-xl"
-                >
-                  Découvrez les dernières actualités, événements et accomplissements de notre université. Restez connecté avec la vie campus !
-                </motion.p>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.5 }}
-                  className="flex gap-4"
-                >
-                  <a href="#articles" className="px-8 py-3 bg-white text-blue-600 font-bold rounded-lg hover:shadow-xl hover:scale-105 transition-all">
-                    Lire les articles
-                  </a>
-                  <a href="#filtres" className="px-8 py-3 bg-white/20 backdrop-blur-md text-white font-bold rounded-lg hover:bg-white/30 transition-all">
-                    Explorer par catégories
-                  </a>
-                </motion.div>
+                <Newspaper sx={{ fontSize: 20 }} /> Blog & Actualités
               </motion.div>
 
-              {/* Right Side - Stats */}
-              <motion.div
-                initial={{ opacity: 0, x: 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="grid grid-cols-2 gap-6"
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
               >
-                {[
-                  { label: 'Articles', value: newsList.length, icon: '📄' },
-                  { label: 'Catégories', value: categories.length, icon: '🏷️' },
-                  { label: 'Tags', value: [...new Set(allTags)].length, icon: '✨' },
-                  { label: 'Mois actifs', value: 12, icon: '📅' },
-                ].map((stat, idx) => (
+                Actualités & <span className="bg-gradient-to-r from-blue-300 to-pink-300 bg-clip-text text-transparent">Événements</span>
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-lg text-blue-50 mb-10 leading-relaxed max-w-2xl"
+              >
+                Découvrez les dernières actualités, événements et accomplissements de notre université. Restez connecté avec la vie campus !
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="flex gap-4 flex-wrap"
+              >
+                <a href="#articles" className="px-8 py-3 bg-white text-blue-600 font-bold rounded-lg hover:shadow-2xl transition-all">
+                  Lire les articles
+                </a>
+                <a href="#filtres" className="px-8 py-3 bg-white/20 backdrop-blur-md text-white font-bold rounded-lg border border-white/30 hover:bg-white/30 transition-all">
+                  Explorer par catégories
+                </a>
+              </motion.div>
+            </motion.div>
+
+            {/* Stats - Bottom Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16 pt-12 border-t border-white/20"
+            >
+              {[
+                { label: 'Articles', value: newsList.length, icon: Article },
+                { label: 'Catégories', value: categories.length, icon: LocalOffer },
+                { label: 'Tags', value: [...new Set(allTags)].length, icon: Star },
+                { label: 'Mois actifs', value: 12, icon: CalendarMonth },
+              ].map((stat, idx) => {
+                const IconComponent = stat.icon;
+                return (
                   <motion.div
                     key={idx}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 + idx * 0.1 }}
+                    transition={{ delay: 0.7 + idx * 0.1 }}
                     whileHover={{ scale: 1.05 }}
-                    className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 hover:bg-white/20 transition-all"
+                    className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 hover:bg-white/20 transition-all hover:border-white/40 flex flex-col justify-between h-full"
                   >
-                    <div className="text-4xl mb-2">{stat.icon}</div>
-                    <div className="text-4xl font-bold mb-2">{stat.value}</div>
-                    <div className="text-blue-100 text-sm">{stat.label}</div>
+                    <div>
+                      <div className="text-3xl font-bold mb-2 text-white">{stat.value}</div>
+                      <div className="text-blue-100 text-sm font-medium">{stat.label}</div>
+                    </div>
+                    <div className="flex items-center gap-3 mt-4 pt-4 border-t border-white/10">
+                      <IconComponent sx={{ fontSize: 32, color: '#dbeafe' }} />
+                    </div>
                   </motion.div>
-                ))}
-              </motion.div>
-            </div>
+                );
+              })}
+            </motion.div>
           </div>
         </motion.div>
 

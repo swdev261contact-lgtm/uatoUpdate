@@ -3,7 +3,11 @@
     "allow": [
       "Bash(npm run:*)",
       "mcp__Claude_Preview__preview_start",
-      "Bash(curl -s http://localhost:5173)"
+      "Bash(curl -s http://localhost:5173)",
+      "Bash(curl -s http://localhost:5173/)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(grep -o \"'[^']*': \\\\`\" src/data/newsList.jsx)",
+      "Bash(grep -c \"navigate\\(\\\\`/blog\" src/components/BlogCard.jsx)"
     ]
   }
 }
