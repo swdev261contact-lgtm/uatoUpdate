@@ -1,16 +1,70 @@
 import sortieHecm from '../assets/sortieHecm.jpg';
-import conferenceia from '../assets/iaConference.jpg';
 import conferenceOratoire from '../assets/conferenceOratoire.jpg'
 import hack1 from '../assets/robo2.jpg';
 import smatching from '../assets/sport.jpg';
 import laureatAF from '../assets/laureatAF.jpg';
 import tech from '../assets/market.jpg';
 import confBasket from '../assets/conferenceBasket.jpg';
+import conIAUR from '../assets/urchadeIA.jpg';
 
+<<<<<<< HEAD
 const getArticleContent = (slug) => {
   const articles = {
     'conference-sur-lart-oratoire': `
 L'Université Privée d'Ambohidratrimo a eu l'immense honneur d'accueillir une conférence exceptionnelle sur l'art oratoire et l'éloquence. Cet événement majeur a rassemblé les étudiants autour d'une thématique cruciale pour leur développement personnel et professionnel.
+=======
+export const newsList = [
+  { type: 'Événement', date: '15 Avril 2026', title: "Conférence - High-Performance Task-Specific Language Models", description: "Conférence exceptionnelle avec Dr Urchade Zaratiana (Fastino Labs) sur les modèles de langue compacts et efficaces.", image: conIAUR, important: 'OBLIGATOIRE : HEST INFO', details: [
+        "Alternative aux LLMs",
+        "Modèles compacts et efficaces",
+        "Architectures multi-tâches",
+        "Automatisation du machine learning",
+        "Intervenant: Dr Urchade Zaratiana",
+        "Role: Member of Technical Staff @ Fastino Labs",
+        "Lieu: Salle HECM L2",
+        "Heure: 14:00"
+      ]
+    },
+  { type: 'Événement', date: '30 Mai 2025', title: "Conférence sur l'art oratoire", description: "Une conférence exceptionnelle sur l'éloquence et l'authenticité.", image: conferenceOratoire, details: [
+        "L'Université privée d'Ambohidratrimo a eu l'immense honneur d'acceilllir une CONFERENCE EXEPTIONNELLE",
+        "Eloquence et authenticité : Trouver votre voix intérieur",
+        "Opportunités exceptionnelle pour les jeunes étudiants qui seront l'avenir de demain.",  
+        "Proposé par le duo le plus primé de Madagascar :",
+        "Ny Avo RAZAFINDRAZAKA : champion du monde de Débat - La Haye 2024 / Double champion de Madagascar en Art Oratoire",  
+        "Josie RAMANANTSOA : Championne du monde de Débat - La Haye 2024 / Championne de plaidoyer contre la corruption",  
+  
+      ]
+    },
+  { type: 'Actualité', date: '5 Mai 2025', title: 'Cérémonie de remise des diplômes 2025', description: 'Félicitations à tous nos diplômés de la promotion 2025 ! Découvrez les moments forts de la cérémonie.', image: sortieHecm, details: [
+        "Discours du président de l'université.",
+        "Remise symbolique des diplômes par faculté.",
+        "Buffet de clôture et échanges entre alumni."
+      ]
+    },
+    { type: 'Événement', date: '15 Mars 2025', title: 'Hackathon Innovation Étudiante', description: 'Participez à notre hackathon annuel et proposez des solutions technologiques innovantes.', image: hack1, details: [
+        "Défi 48h pour résoudre un cas réel.",
+        "Coaching par des alumni experts.",
+        "Lots et visibilité pour les gagnants."
+      ]
+    },
+    { type: 'Actualité', date: '08 Février 2025', title: 'Smatching', description: 'Première participation aux tournois national de Basket ball pour notre Université', image: smatching, details: [
+        "Un grand encouragement à notre équipe",
+        "Le tournois et les affrontements dureront 1 semaine",
+        "Une victoire pour notre équipe"
+      ]
+    },
+      { type: 'Actualité', date: '04 Février 2025', title: 'Championnat de lecture', description: 'Notre championne de lecture "ARIMALALA Fy Irina Anay"', image: laureatAF, details: [
+        "Elle etait encore étudiante en 2ème année das la mention HECM",
+        "L'Alliance Française avait organisé un championnat de lecture à l'Alliance française d'Antananarivo Ampefiloha",
+        "Elle a gagné la première place du tournois. Felicitation Anay."
+      ]
+    },
+      { type: 'Événement', date: '02 Avril 2024', title: 'Conférence dédiée au basket-ball', description: 'Ne ratez pas notre conférence sur le basket-ball organisé par le BDS UP Ambohidratrimo', image: confBasket, details: [
+        "Echange entre professionnels et coachs",
+        "Apprenez les règles fondamentaux de ce sport"
+      ]
+    },
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
 
 L'art oratoire est bien plus qu'une simple capacité à parler en public. C'est une compétence essentielle qui s'articule autour de l'éloquence, de l'authenticité et de la capacité à connecter avec son audience. Dans notre monde moderne, où la communication est devenue un élément fondamental du succès, maîtriser l'art de la parole s'impose comme une nécessité incontournable.
 

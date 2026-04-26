@@ -32,7 +32,7 @@ const schools = [
     image: hep,
     code: 'HELS',
     name: 'Hautes Études en Lettres et Sciences Humaines',
-    description: 'Maîtrisez les arts de la communication, de l\'enseignement et de la réflexion philosophique.',
+    description: 'Maîtrisez les arts de la communication, de l\'étude et de la réflexion philosophique.',
     icon: BookOpen,
     gradient: 'from-accent-gold to-yellow-600',
     programs: Object.keys(programModules.HELS).length,
@@ -84,8 +84,12 @@ const Programme = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+<<<<<<< HEAD
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
+=======
+          className="text-center mb-16"
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
         >
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -162,12 +166,6 @@ const Programme = () => {
                     </div>
                   </div>
                 </div>
-
-                <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="bg-white dark:bg-dark-700 rounded-full p-2 shadow-lg">
-                    <ChevronRight className={`w-5 h-5 bg-gradient-to-r ${school.gradient} bg-clip-text text-transparent`} />
-                  </div>
-                </div>
               </motion.div>
             );
           })}
@@ -180,11 +178,7 @@ const Programme = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              onClick={() => {
-                setSelectedSchool(null);
-                setSelectedProgram(null);
-              }}
+              onClick={() => { setSelectedSchool(null); setSelectedProgram(null); }}
             >
               <motion.div
                 className="relative bg-white dark:bg-gray-800 rounded-3xl w-full max-w-7xl max-h-[95vh] overflow-hidden shadow-2xl"
@@ -196,12 +190,7 @@ const Programme = () => {
               >
                 <div className={`sticky top-0 z-20 bg-gradient-to-r ${selectedSchool.gradient} shadow-lg`}>
                   <div className="flex items-center justify-between p-6">
-                    <motion.div
-                      className="flex items-center gap-4"
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.2 }}
-                    >
+                    <motion.div className="flex items-center gap-4">
                       <div className="p-2 bg-white/20 backdrop-blur-sm rounded-xl">
                         <img src={selectedSchool.image} alt={selectedSchool.code} className="w-12 h-12 rounded-lg shadow-lg" />
                       </div>
@@ -211,10 +200,7 @@ const Programme = () => {
                       </div>
                     </motion.div>
                     <motion.button
-                      onClick={() => {
-                        setSelectedSchool(null);
-                        setSelectedProgram(null);
-                      }}
+                      onClick={() => { setSelectedSchool(null); setSelectedProgram(null); }}
                       className="p-3 hover:bg-white/20 rounded-xl transition-all duration-300 hover:scale-110"
                       whileHover={{ rotate: 90 }}
                       whileTap={{ scale: 0.9 }}
@@ -224,12 +210,7 @@ const Programme = () => {
                   </div>
 
                   {!selectedProgram && (
-                    <motion.div
-                      className="px-6 pb-4"
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 }}
-                    >
+                    <motion.div className="px-6 pb-4">
                       <p className="text-white/80 text-sm">Choisissez un parcours pour découvrir les modules de formation</p>
                     </motion.div>
                   )}
@@ -243,7 +224,6 @@ const Programme = () => {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: 20 }}
-                        transition={{ duration: 0.3 }}
                         className="grid md:grid-cols-2 gap-6"
                       >
                         {Object.entries(getSchoolPrograms(selectedSchool.code)).map(([key, program], idx) => (
@@ -251,57 +231,43 @@ const Programme = () => {
                             key={key}
                             initial={{ opacity: 0, y: 40 }}
                             animate={{ opacity: 1, y: 0 }}
+<<<<<<< HEAD
                             transition={{ duration: 0.5, delay: idx * 0.12 }}
                             className="group cursor-pointer bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400"
+=======
+                            transition={{ delay: idx * 0.1 }}
+                            className="group cursor-pointer bg-gradient-to-br from-gray-50 to-white dark:from-dark-900 dark:to-dark-800 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 border-gray-200 dark:border-dark-700 hover:border-primary-500"
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
                             onClick={() => openProgramDetail(key)}
                             whileHover={{ y: -8, scale: 1.02 }}
                           >
                             <div className="relative h-56 overflow-hidden">
-                              <motion.img
-                                src={program.cover}
-                                alt={program.title}
-                                className="w-full h-full object-cover"
-                                whileHover={{ scale: 1.1 }}
-                                transition={{ duration: 0.4 }}
-                              />
+                              <img src={program.cover} alt={program.title} className="w-full h-full object-cover" whileHover={{ scale: 1.1 }} />
                               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                               <div className="absolute bottom-4 left-4 right-4">
-                                <motion.h3
-                                  className="text-2xl font-bold text-white mb-2"
-                                  initial={{ opacity: 0, y: 10 }}
-                                  animate={{ opacity: 1, y: 0 }}
-                                >
-                                  {program.title}
-                                </motion.h3>
-                              </div>
-                              <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <ChevronRight className="w-5 h-5 text-white" />
+                                <h3 className="text-2xl font-bold text-white">{program.title}</h3>
                               </div>
                             </div>
 
                             <div className="p-6">
                               <div className="mb-6">
                                 <div className="flex items-center gap-2 mb-4">
-                                  <Sparkles className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-                                  <span className="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase tracking-wide">Spécialisations</span>
+                                  <Sparkles className="w-5 h-5 text-primary-600" />
+                                  <span className="text-sm font-bold text-gray-700 dark:text-gray-300 uppercase">Spécialisations</span>
                                 </div>
                                 <ul className="space-y-3">
                                   {program.specializations.map((spec, i) => (
                                     <li key={i} className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400">
-                                      <div className="w-2 h-2 rounded-full bg-gradient-to-r from-primary-500 to-primary-600 mt-1.5 flex-shrink-0" />
-                                      <span className="leading-relaxed">{spec}</span>
+                                      <div className="w-2 h-2 rounded-full bg-gradient-to-r from-primary-500 to-primary-600 mt-1.5" />
+                                      <span>{spec}</span>
                                     </li>
                                   ))}
                                 </ul>
                               </div>
 
-                              <motion.button
-                                className={`w-full py-3.5 bg-gradient-to-r ${selectedSchool.gradient} text-white rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl`}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
-                              >
+                              <motion.button className={`w-full py-3.5 bg-gradient-to-r ${selectedSchool.gradient} text-white rounded-xl font-semibold flex items-center justify-center gap-2 shadow-lg`} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                                 Voir les modules détaillés
-                                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                <ChevronRight className="w-5 h-5" />
                               </motion.button>
                             </div>
                           </motion.div>
@@ -313,14 +279,8 @@ const Programme = () => {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -20 }}
-                        transition={{ duration: 0.3 }}
                       >
-                        <motion.button
-                          onClick={() => setSelectedProgram(null)}
-                          className="mb-8 flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-dark-900 hover:bg-gray-200 dark:hover:bg-dark-700 text-primary-600 dark:text-primary-400 rounded-xl font-semibold transition-all duration-300"
-                          whileHover={{ x: -5, scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                        >
+                        <motion.button onClick={() => setSelectedProgram(null)} className="mb-8 flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-dark-900 hover:bg-gray-200 dark:hover:bg-dark-700 text-primary-600 rounded-xl font-semibold" whileHover={{ x: -5 }}>
                           <ChevronRight className="w-5 h-5 rotate-180" />
                           Retour aux parcours
                         </motion.button>
@@ -329,23 +289,11 @@ const Programme = () => {
                           const program = getSchoolPrograms(selectedSchool.code)[selectedProgram];
                           return (
                             <div>
-                              <motion.div
-                                className="mb-10"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                              >
-                                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                                  {program.title}
-                                </h3>
+                              <motion.div className="mb-10" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+                                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">{program.title}</h3>
                                 <div className="flex flex-wrap gap-3">
                                   {program.specializations.map((spec, i) => (
-                                    <motion.span
-                                      key={i}
-                                      initial={{ opacity: 0, scale: 0.8 }}
-                                      animate={{ opacity: 1, scale: 1 }}
-                                      transition={{ delay: i * 0.1 }}
-                                      className={`px-4 py-2 bg-gradient-to-r ${selectedSchool.gradient} text-white rounded-full text-sm font-semibold shadow-md`}
-                                    >
+                                    <motion.span key={i} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.1 }} className={`px-4 py-2 bg-gradient-to-r ${selectedSchool.gradient} text-white rounded-full text-sm font-semibold`}>
                                       {spec}
                                     </motion.span>
                                   ))}
@@ -354,6 +302,7 @@ const Programme = () => {
 
                               <div className="space-y-6">
                                 {program.modules.map((module, idx) => (
+<<<<<<< HEAD
                                   <motion.div
                                     key={idx}
                                     initial={{ opacity: 0, y: 40 }}
@@ -362,20 +311,19 @@ const Programme = () => {
                                     whileHover={{ y: -5 }}
                                     className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-2xl p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl"
                                   >
+=======
+                                  <motion.div key={idx} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }} className="bg-white dark:bg-dark-900 rounded-2xl p-8 border-2 border-gray-200 dark:border-dark-700 hover:border-primary-300 transition-all shadow-lg hover:shadow-xl">
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
                                     <div className="flex items-start gap-4 mb-6">
-                                      <motion.div
-                                        className={`flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-r ${selectedSchool.gradient} text-white flex items-center justify-center text-lg font-bold shadow-lg`}
-                                        whileHover={{ scale: 1.1, rotate: 5 }}
-                                      >
+                                      <motion.div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${selectedSchool.gradient} text-white flex items-center justify-center text-lg font-bold`} whileHover={{ scale: 1.1, rotate: 5 }}>
                                         {idx + 1}
                                       </motion.div>
-                                      <h4 className="text-2xl font-bold text-gray-900 dark:text-white mt-1">
-                                        {module.category}
-                                      </h4>
+                                      <h4 className="text-2xl font-bold text-gray-900 dark:text-white mt-1">{module.category}</h4>
                                     </div>
 
-                                    <ul className="grid md:grid-cols-2 gap-4">
+                                    <div className="grid md:grid-cols-2 gap-4">
                                       {module.courses.map((course, i) => (
+<<<<<<< HEAD
                                         <motion.li
                                           key={i}
                                           className="flex items-start gap-3 p-3 bg-white dark:bg-gray-950/50 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-900 transition-colors duration-200"
@@ -384,11 +332,14 @@ const Programme = () => {
                                           transition={{ delay: 0.3 + i * 0.06 }}
                                           whileHover={{ x: 4 }}
                                         >
+=======
+                                        <motion.li key={i} className="flex items-start gap-3 p-3 bg-gray-50 dark:bg-dark-950 rounded-lg" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 + i * 0.05 }}>
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
                                           <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
-                                          <span className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">{course}</span>
+                                          <span className="text-gray-700 dark:text-gray-300 text-sm">{course}</span>
                                         </motion.li>
                                       ))}
-                                    </ul>
+                                    </div>
                                   </motion.div>
                                 ))}
                               </div>

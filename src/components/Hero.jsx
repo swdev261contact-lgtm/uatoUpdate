@@ -62,7 +62,7 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.5 }}
               className="text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed"
             >
-              Rejoignez l'Université Privée d'Ambohidratrimo et bénéficiez d'une formation de qualité,
+              Rejoignez l'Université Privée d'Ambohydratrimo et bénéficié d'une formation de qualité,
               dispensée par des experts, dans un environnement moderne et innovant.
             </motion.p>
 

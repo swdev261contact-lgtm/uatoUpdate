@@ -7,11 +7,14 @@ import NewsCards from '../components/NewsCards'
 import RecapHome from '../components/RecapHome'
 import Navbar from '../components/Navbar'
 import Partenariat from '../components/Partenariat'
+import InfoBar from '../components/InfoBar'
 
 
 const Contenue = () => {
   return (
     <div className="scroll-smooth">
+
+      <InfoBar />
 
       <Navbar type="home"/>
 

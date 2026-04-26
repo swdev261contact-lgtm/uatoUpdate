@@ -5,12 +5,13 @@ import { motion } from 'framer-motion';
 export default function LabModal({ data, onClose }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
+      initial={{ opacity: 0, scale: 0.95, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95, y: 20 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 25 }}
       className="bg-white dark:bg-gray-800 rounded-2xl max-w-5xl w-full max-h-[85vh] overflow-hidden shadow-2xl"
     >
-      <div className="flex justify-between items-center sticky p-5 z-10 top-0 bg-gradient-to-r from-blue-600 to-cyan-600 text-white">
+      <div className="flex justify-between items-center sticky p-5 z-20 top-0 bg-gradient-to-r from-blue-600 to-cyan-600 text-white">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-white/20 rounded-lg">
             <Sparkles className="w-6 h-6" />

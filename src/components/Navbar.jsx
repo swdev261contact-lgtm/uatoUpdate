@@ -11,7 +11,11 @@ const navLinksByType = {
     { href: 'programmes', label: 'Programmes', type: 'anchor' },
     { href: 'partenariat', label: 'Partenaires', type: 'anchor' },
     { href: '/vie-etudiante', label: 'Vie étudiante', type: 'route' },
+<<<<<<< HEAD
     { href: '/actualites', label: 'Blog', type: 'route' },
+=======
+    { href: '/blog', label: 'Blog', type: 'route' },
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
     { href: '/admission', label: "S'inscrire", type: 'button' },
   ],
   vieEtudiante: [
@@ -20,7 +24,11 @@ const navLinksByType = {
     { href: '/#programmes', label: 'Programmes', type: 'route' },
     { href: '/#partenariat', label: 'Partenaires', type: 'route' },
     { href: '/vie-etudiante', label: 'Vie étudiante', type: 'route' },
+<<<<<<< HEAD
     { href: '/actualites', label: 'Blog', type: 'route' },
+=======
+    { href: '/blog', label: 'Blog', type: 'route' },
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
     { href: '/admission', label: "S'inscrire", type: 'button' },
   ],
   admission: [
@@ -29,15 +37,20 @@ const navLinksByType = {
     { href: '/#programmes', label: 'Programmes', type: 'route' },
     { href: '/#partenariat', label: 'Partenaires', type: 'route' },
     { href: '/vie-etudiante', label: 'Vie étudiante', type: 'route' },
+<<<<<<< HEAD
     { href: '/actualites', label: 'Blog', type: 'route' },
+=======
+    { href: '/blog', label: 'Blog', type: 'route' },
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
     { href: '/admission', label: "S'inscrire", type: 'button' },
   ],
-  listeNews: [
+  blog: [
     { href: '/', label: 'Accueil', type: 'route' },
     { href: '/#a-propos', label: 'À propos', type: 'route' },
     { href: '/#programmes', label: 'Programmes', type: 'route' },
     { href: '/#partenariat', label: 'Partenaires', type: 'route' },
     { href: '/vie-etudiante', label: 'Vie étudiante', type: 'route' },
+<<<<<<< HEAD
     { href: '/actualites', label: 'Blog', type: 'route' },
     { href: '/admission', label: "S'inscrire", type: 'button' },
   ],
@@ -48,6 +61,9 @@ const navLinksByType = {
     { href: '/#partenariat', label: 'Partenaires', type: 'route' },
     { href: '/vie-etudiante', label: 'Vie étudiante', type: 'route' },
     { href: '/actualites', label: 'Blog', type: 'route' },
+=======
+    { href: '/blog', label: 'Blog', type: 'route' },
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
     { href: '/admission', label: "S'inscrire", type: 'button' },
   ],
 };
@@ -56,6 +72,7 @@ const Navbar = ({ type = 'home' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [visible, setVisible] = useState(true);
   const [scrolled, setScrolled] = useState(false);
+<<<<<<< HEAD
   const [activeSection, setActiveSection] = useState(
     type === 'listeNews' ? '' : navLinksByType[type]?.find(link => link.type === 'anchor')?.href || ''
   );
@@ -64,6 +81,8 @@ const Navbar = ({ type = 'home' }) => {
   const scrollDirection = useRef('down');
 
   const closeMenu = () => setIsOpen(false);
+=======
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
 
   useEffect(() => {
     const handleScroll = () => {
@@ -85,42 +104,12 @@ const Navbar = ({ type = 'home' }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (type === 'listeNews') {
-      setActiveSection('');
-      return;
-    }
-
-    const callback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    if (observer.current) observer.current.disconnect();
-
-    observer.current = new IntersectionObserver(callback, {
-      rootMargin: '-50% 50px -50% 50px',
-      threshold: 0,
-    });
-
-    navLinksByType[type]?.forEach(({ href, type: linkType }) => {
-      if (linkType === 'anchor') {
-        const section = document.getElementById(href);
-        if (section) observer.current.observe(section);
-      }
-    });
-
-    return () => observer.current && observer.current.disconnect();
-  }, [type]);
+  const closeMenu = () => setIsOpen(false);
 
   const renderLink = ({ href, label, type: linkType }) => {
-    const isActive = linkType === 'anchor' && activeSection === href;
-
     if (linkType === 'anchor') {
       return (
+<<<<<<< HEAD
         <>
           <a
             href={`#${href}`}
@@ -152,11 +141,21 @@ const Navbar = ({ type = 'home' }) => {
             {label}
           </a>
         </>
+=======
+        <a
+          href={`#${href}`}
+          onClick={closeMenu}
+          className="hidden lg:block px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-dark-800 transition-all duration-300"
+        >
+          {label}
+        </a>
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
       );
     }
 
     if (linkType === 'route') {
       return (
+<<<<<<< HEAD
         <>
           <RouterLink
             to={href}
@@ -174,11 +173,21 @@ const Navbar = ({ type = 'home' }) => {
             {label}
           </RouterLink>
         </>
+=======
+        <RouterLink
+          to={href}
+          onClick={closeMenu}
+          className="hidden lg:block px-4 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-dark-800 transition-all duration-300"
+        >
+          {label}
+        </RouterLink>
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
       );
     }
 
     if (linkType === 'button') {
       return (
+<<<<<<< HEAD
         <>
           <RouterLink
             to={href}
@@ -203,6 +212,16 @@ const Navbar = ({ type = 'home' }) => {
             {label}
           </RouterLink>
         </>
+=======
+        <RouterLink
+          to={href}
+          onClick={closeMenu}
+          className="hidden lg:inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white text-sm font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all"
+        >
+          <GraduationCap className="w-4 h-4" />
+          {label}
+        </RouterLink>
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
       );
     }
   };
@@ -214,6 +233,7 @@ const Navbar = ({ type = 'home' }) => {
       transition={{ duration: 0.3, ease: 'easeInOut' }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
+<<<<<<< HEAD
           ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-lg shadow-md'
           : 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-sm'
       }`}
@@ -240,14 +260,38 @@ const Navbar = ({ type = 'home' }) => {
               }`}>
                 Toujours Plus Haut
               </p>
+=======
+          ? 'bg-white/95 dark:bg-dark-900/95 backdrop-blur-lg shadow-lg'
+          : 'bg-white/90 dark:bg-dark-900/90 backdrop-blur-md'
+      }`}
+    >
+      <div className="container mx-auto px-6">
+        <div className="flex items-center justify-between h-20">
+          <RouterLink to="/" className="flex items-center gap-3 group">
+            <div className="relative">
+              <img
+                src={logo}
+                alt="Logo UPA"
+                className="w-12 h-12 rounded-xl shadow-lg group-hover:scale-105 transition-transform"
+              />
+            </div>
+            <div>
+              <h1 className="font-bold bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent text-lg">
+                Université Privée d'Ambohydratrimo
+              </h1>
+              <p className="uppercase text-xs text-gray-500 font-semibold">Toujours Plus Haut</p>
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
             </div>
           </RouterLink>
 
           {/* Mobile Menu Button */}
           <button
+<<<<<<< HEAD
             className="lg:hidden p-2 text-primary-600 dark:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-300"
+=======
+            className="lg:hidden p-2 text-primary-600 dark:text-primary-400 hover:bg-gray-100 dark:hover:bg-dark-800 rounded-lg"
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
             onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -265,6 +309,7 @@ const Navbar = ({ type = 'home' }) => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+<<<<<<< HEAD
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -295,15 +340,43 @@ const Navbar = ({ type = 'home' }) => {
                   >
                     <X size={24} />
                   </button>
+=======
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-white dark:bg-dark-900 border-t border-gray-200 dark:border-dark-800"
+          >
+            <div className="container mx-auto px-6 py-4 space-y-2">
+              {navLinksByType[type]?.map((link) => (
+                <div key={link.href} onClick={closeMenu}>
+                  {link.type === 'anchor' && (
+                    <a
+                      href={`#${link.href}`}
+                      className="block px-4 py-3 rounded-lg text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-dark-800"
+                    >
+                      {link.label}
+                    </a>
+                  )}
+                  {link.type === 'route' && (
+                    <RouterLink
+                      to={link.href}
+                      className="block px-4 py-3 rounded-lg text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-dark-800"
+                    >
+                      {link.label}
+                    </RouterLink>
+                  )}
+                  {link.type === 'button' && (
+                    <RouterLink
+                      to={link.href}
+                      className="block px-4 py-3 mx-4 my-2 text-center bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg font-semibold"
+                    >
+                      {link.label}
+                    </RouterLink>
+                  )}
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
                 </div>
-
-                <nav className="space-y-2">
-                  {navLinksByType[type]?.map((link) => (
-                    <div key={link.href}>{renderLink(link)}</div>
-                  ))}
-                </nav>
-              </div>
-            </motion.div>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
