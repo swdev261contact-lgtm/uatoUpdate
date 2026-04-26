@@ -57,26 +57,69 @@ const Programme = () => {
     setSelectedProgram(programKey);
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  };
+
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50 dark:from-dark-900 dark:via-dark-800 dark:to-dark-900">
-      <div className="container mx-auto px-6">
+    <section className="py-20 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-950">
+      <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+<<<<<<< HEAD
+          transition={{ duration: 0.6 }}
+          className="text-center mb-20"
+=======
           className="text-center mb-16"
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/20 rounded-full mb-4">
-            <GraduationCap className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-            <span className="text-primary-700 dark:text-primary-300 font-medium">Nos Formations</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-            Explorez nos <span className="bg-gradient-to-r from-primary-600 to-accent-gold bg-clip-text text-transparent">Programmes</span>
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 dark:bg-blue-900/30 rounded-full mb-6"
+          >
+            <GraduationCap className="w-5 h-5 text-blue-600 dark:text-blue-300" />
+            <span className="text-blue-700 dark:text-blue-300 font-semibold">Nos Formations</span>
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight"
+          >
+            Explorez nos <span className="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">Programmes</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
+          >
             Des formations complètes et spécialisées, conçues pour vous préparer aux métiers d'avenir
             avec un enseignement de qualité et un suivi personnalisé.
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -85,13 +128,13 @@ const Programme = () => {
             return (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                transition={{ duration: 0.6, delay: idx * 0.15 }}
                 onClick={() => openSchoolModal(school)}
-                className="group relative bg-white dark:bg-dark-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-dark-700 cursor-pointer"
-                whileHover={{ y: -8, scale: 1.02 }}
+                whileHover={{ y: -12, scale: 1.03 }}
+                className="group relative bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-gray-700 cursor-pointer"
               >
                 <div className={`absolute inset-0 bg-gradient-to-br ${school.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
 
@@ -131,18 +174,18 @@ const Programme = () => {
         <AnimatePresence mode="wait">
           {selectedSchool && (
             <motion.div
-              className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 z-50"
+              className="fixed inset-0 bg-black/70 backdrop-blur-lg flex items-center justify-center p-4 z-50"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => { setSelectedSchool(null); setSelectedProgram(null); }}
             >
               <motion.div
-                className="relative bg-white dark:bg-dark-800 rounded-3xl w-full max-w-7xl max-h-[95vh] overflow-hidden shadow-2xl"
-                initial={{ scale: 0.8, opacity: 0, y: 50 }}
+                className="relative bg-white dark:bg-gray-800 rounded-3xl w-full max-w-7xl max-h-[95vh] overflow-hidden shadow-2xl"
+                initial={{ scale: 0.75, opacity: 0, y: 60 }}
                 animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.8, opacity: 0, y: 50 }}
-                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                exit={{ scale: 0.75, opacity: 0, y: 60 }}
+                transition={{ type: "spring", damping: 20, stiffness: 300 }}
                 onClick={(e) => e.stopPropagation()}
               >
                 <div className={`sticky top-0 z-20 bg-gradient-to-r ${selectedSchool.gradient} shadow-lg`}>
@@ -186,12 +229,17 @@ const Programme = () => {
                         {Object.entries(getSchoolPrograms(selectedSchool.code)).map(([key, program], idx) => (
                           <motion.div
                             key={key}
-                            initial={{ opacity: 0, y: 30 }}
+                            initial={{ opacity: 0, y: 40 }}
                             animate={{ opacity: 1, y: 0 }}
+<<<<<<< HEAD
+                            transition={{ duration: 0.5, delay: idx * 0.12 }}
+                            className="group cursor-pointer bg-gradient-to-br from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 border-gray-200 dark:border-gray-700 hover:border-blue-500 dark:hover:border-blue-400"
+=======
                             transition={{ delay: idx * 0.1 }}
                             className="group cursor-pointer bg-gradient-to-br from-gray-50 to-white dark:from-dark-900 dark:to-dark-800 rounded-2xl overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 border-gray-200 dark:border-dark-700 hover:border-primary-500"
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
                             onClick={() => openProgramDetail(key)}
-                            whileHover={{ y: -5 }}
+                            whileHover={{ y: -8, scale: 1.02 }}
                           >
                             <div className="relative h-56 overflow-hidden">
                               <img src={program.cover} alt={program.title} className="w-full h-full object-cover" whileHover={{ scale: 1.1 }} />
@@ -254,7 +302,18 @@ const Programme = () => {
 
                               <div className="space-y-6">
                                 {program.modules.map((module, idx) => (
+<<<<<<< HEAD
+                                  <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, y: 40 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.5, delay: idx * 0.1 }}
+                                    whileHover={{ y: -5 }}
+                                    className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-2xl p-8 border-2 border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 transition-all duration-300 shadow-lg hover:shadow-xl"
+                                  >
+=======
                                   <motion.div key={idx} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }} className="bg-white dark:bg-dark-900 rounded-2xl p-8 border-2 border-gray-200 dark:border-dark-700 hover:border-primary-300 transition-all shadow-lg hover:shadow-xl">
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
                                     <div className="flex items-start gap-4 mb-6">
                                       <motion.div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${selectedSchool.gradient} text-white flex items-center justify-center text-lg font-bold`} whileHover={{ scale: 1.1, rotate: 5 }}>
                                         {idx + 1}
@@ -264,7 +323,18 @@ const Programme = () => {
 
                                     <div className="grid md:grid-cols-2 gap-4">
                                       {module.courses.map((course, i) => (
+<<<<<<< HEAD
+                                        <motion.li
+                                          key={i}
+                                          className="flex items-start gap-3 p-3 bg-white dark:bg-gray-950/50 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-900 transition-colors duration-200"
+                                          initial={{ opacity: 0, x: -30 }}
+                                          animate={{ opacity: 1, x: 0 }}
+                                          transition={{ delay: 0.3 + i * 0.06 }}
+                                          whileHover={{ x: 4 }}
+                                        >
+=======
                                         <motion.li key={i} className="flex items-start gap-3 p-3 bg-gray-50 dark:bg-dark-950 rounded-lg" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 + i * 0.05 }}>
+>>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
                                           <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
                                           <span className="text-gray-700 dark:text-gray-300 text-sm">{course}</span>
                                         </motion.li>

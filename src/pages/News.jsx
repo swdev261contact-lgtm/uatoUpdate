@@ -1,83 +1,420 @@
-import React, { useState } from 'react';
-import { ArrowRight, X } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { X, Menu, Search, ImageOff } from 'lucide-react';
+import { Newspaper, LocalOffer, Star, CalendarMonth, Article } from '@mui/icons-material';
 import { newsList } from '../data/newsList';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../components/Navbar';
+import BlogCard from '../components/BlogCard';
+import BlogSidebar from '../components/BlogSidebar';
+import bdsBackground from '../assets/BDS.jpg';
 
 const News = () => {
-    const [openIdx, setOpenIdx] = useState(null);
-    
+  const [openIdx, setOpenIdx] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [imageErrors, setImageErrors] = useState({});
+
+  // Extract unique categories and tags
+  const categories = [...new Set(newsList.map((item) => item.category))];
+  const allTags = newsList.flatMap((item) => item.tags || []);
+
+  // Filter articles
+  const filteredNews = useMemo(() => {
+    return newsList.filter((item) => {
+      const matchCategory = !selectedCategory || item.category === selectedCategory;
+      const matchTags = selectedTags.length === 0 || selectedTags.some((tag) => item.tags?.includes(tag));
+      const matchSearch =
+        !searchQuery ||
+        item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchQuery.toLowerCase());
+
+      return matchCategory && matchTags && matchSearch;
+    });
+  }, [selectedCategory, selectedTags, searchQuery]);
+
+  const handleTagToggle = (tag) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  };
+
+  const handleClear = () => {
+    setSelectedCategory('');
+    setSelectedTags([]);
+    setSearchQuery('');
+  };
+
+  const handleImageError = (idx) => {
+    setImageErrors((prev) => ({ ...prev, [idx]: true }));
+  };
+
   return (
-       <>      
-    <Navbar type="listeNews"/>
+    <>
+      <Navbar type="blog" />
 
-    <motion.div className="p-8 bg-gray-100 dark:bg-gray-900 min-h-screen">
-      <motion.h1 className="text-4xl text-center mb-10 md:text-5xl font-bold bg-gradient-to-r from-blue-800 to-pink-500 bg-clip-text text-transparent">Toutes les actualités & événements</motion.h1>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {newsList.map((news, idx) => (
-          <div
-            key={idx}
-            className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-300"
-          >
-            <img src={news.image} alt={news.title} className="w-full h-48 object-cover" />
-            <div className="p-4">
-              <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded">{news.type}</span>
-              <time className="block text-xs text-gray-500 mt-1">{news.date}</time>
-              <h3 className="text-lg font-semibold mt-2 text-gray-800 dark:text-white">{news.title}</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300 mt-2 line-clamp-3">{news.description}</p>
-              <button
-                onClick={() => setOpenIdx(idx)}
-                className="mt-3 text-blue-500 flex gap-1 items-center text-sm font-medium hover:underline"
-              >
-                Lire plus <ArrowRight size={20} />
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {openIdx !== null && (
-        <div
-          onClick={() => setOpenIdx(null)}
-          className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 p-4"
+      <motion.div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+        {/* Hero Section */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="relative overflow-hidden text-white"
+          style={{
+            backgroundImage: `url(${bdsBackground})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed'
+          }}
         >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="bg-white dark:bg-gray-800 rounded-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto relative"
-          >
-          <div className="flex justify-between items-center sticky top-0 p-3 z-10 w-full bg-white dark:bg-gray-800">            
-            <span className=" bg-blue-500 text-white text-xs px-2 py-1 rounded">{newsList[openIdx].type}</span>
-              <button
-                onClick={() => setOpenIdx(null)}
-                className="absolute top-3 right-3 text-gray-500"
+          {/* Dark overlay with gradient */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/70" />
+
+          {/* Animated Background Elements */}
+          <motion.div
+            animate={{
+              y: [0, -20, 0],
+              opacity: [0.15, 0.25, 0.15]
+            }}
+            transition={{ duration: 8, repeat: Infinity }}
+            className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"
+          />
+          <motion.div
+            animate={{
+              y: [0, 20, 0],
+              opacity: [0.15, 0.25, 0.15]
+            }}
+            transition={{ duration: 10, repeat: Infinity, delay: 1 }}
+            className="absolute bottom-0 left-0 w-80 h-80 bg-white/10 rounded-full blur-3xl -ml-40 -mb-40"
+          />
+
+          <div className="relative z-10 max-w-7xl mx-auto px-6 py-28 md:py-40 lg:py-48">
+            {/* Main Content */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="max-w-3xl"
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="inline-block mb-6 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold flex items-center gap-2"
               >
-                <X size={27} className='' />
-              </button>
+                <Newspaper sx={{ fontSize: 20 }} /> Blog & Actualités
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+              >
+                Actualités & <span className="bg-gradient-to-r from-blue-300 to-pink-300 bg-clip-text text-transparent">Événements</span>
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-lg text-blue-50 mb-10 leading-relaxed max-w-2xl"
+              >
+                Découvrez les dernières actualités, événements et accomplissements de notre université. Restez connecté avec la vie campus !
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                className="flex gap-4 flex-wrap"
+              >
+                <a href="#articles" className="px-8 py-3 bg-white text-blue-600 font-bold rounded-lg hover:shadow-2xl transition-all">
+                  Lire les articles
+                </a>
+                <a href="#filtres" className="px-8 py-3 bg-white/20 backdrop-blur-md text-white font-bold rounded-lg border border-white/30 hover:bg-white/30 transition-all">
+                  Explorer par catégories
+                </a>
+              </motion.div>
+            </motion.div>
+
+            {/* Stats - Bottom Section */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16 pt-12 border-t border-white/20"
+            >
+              {[
+                { label: 'Articles', value: newsList.length, icon: Article },
+                { label: 'Catégories', value: categories.length, icon: LocalOffer },
+                { label: 'Tags', value: [...new Set(allTags)].length, icon: Star },
+                { label: 'Mois actifs', value: 12, icon: CalendarMonth },
+              ].map((stat, idx) => {
+                const IconComponent = stat.icon;
+                return (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 + idx * 0.1 }}
+                    whileHover={{ scale: 1.05 }}
+                    className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 hover:bg-white/20 transition-all hover:border-white/40 flex flex-col justify-between h-full"
+                  >
+                    <div>
+                      <div className="text-3xl font-bold mb-2 text-white">{stat.value}</div>
+                      <div className="text-blue-100 text-sm font-medium">{stat.label}</div>
+                    </div>
+                    <div className="flex items-center gap-3 mt-4 pt-4 border-t border-white/10">
+                      <IconComponent sx={{ fontSize: 32, color: '#dbeafe' }} />
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Main Content */}
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          {/* Search Bar */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mb-8"
+          >
+            <div className="relative">
+              <Search className="absolute left-4 top-3.5 text-gray-400" size={20} />
+              <input
+                type="text"
+                placeholder="Rechercher un article..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </motion.div>
+
+          {/* Mobile Menu Button */}
+          <div className="mb-6 lg:hidden">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              <Menu size={20} />
+              Filtres
+            </motion.button>
+          </div>
+
+          {/* Content Grid */}
+          <div className="flex gap-8">
+            {/* Sidebar - Desktop */}
+            <div className="hidden lg:block w-64 flex-shrink-0">
+              <BlogSidebar
+                categories={categories}
+                tags={allTags}
+                selectedCategory={selectedCategory}
+                selectedTags={selectedTags}
+                onCategoryChange={setSelectedCategory}
+                onTagChange={handleTagToggle}
+                onClear={handleClear}
+                isOpen={true}
+                onClose={() => {}}
+              />
             </div>
 
-          <div className="p-6">
-            <img
-              src={newsList[openIdx].image}
-              alt={newsList[openIdx].title}
-              className="w-[99.9%] h-full object-cover rounded mb-4"
-            />
-            <h3 className="text-2xl font-bold text-gray-800 dark:text-white">{newsList[openIdx].title}</h3>
-            <time className="block text-sm text-gray-500 dark:text-gray-300 mb-4">{newsList[openIdx].date}</time>
-            <p className="text-gray-700 dark:text-gray-300 mb-4">{newsList[openIdx].description}</p>
-            <ul className="list-disc pl-5 space-y-2 text-gray-700 dark:text-gray-300">
-              {newsList[openIdx].details.map((item, i) => (
-                <li key={i}>{item}</li>
-              ))}
-            </ul>
-          </div>
+            {/* Sidebar - Mobile */}
+            <AnimatePresence>
+              {sidebarOpen && (
+                <div className="lg:hidden">
+                  <BlogSidebar
+                    categories={categories}
+                    tags={allTags}
+                    selectedCategory={selectedCategory}
+                    selectedTags={selectedTags}
+                    onCategoryChange={setSelectedCategory}
+                    onTagChange={handleTagToggle}
+                    onClear={handleClear}
+                    isOpen={sidebarOpen}
+                    onClose={() => setSidebarOpen(false)}
+                  />
+                </div>
+              )}
+            </AnimatePresence>
+
+            {/* Articles Grid */}
+            <div className="flex-1">
+              {filteredNews.length > 0 ? (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6"
+                >
+                  {filteredNews.map((news, idx) => (
+                    <BlogCard
+                      key={idx}
+                      news={news}
+                      idx={idx}
+                      onClick={() => setOpenIdx(newsList.indexOf(news))}
+                    />
+                  ))}
+                </motion.div>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-center py-16"
+                >
+                  <p className="text-xl text-gray-600 dark:text-gray-400 mb-4">
+                    Aucun article ne correspond à vos critères
+                  </p>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    onClick={handleClear}
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium"
+                  >
+                    Réinitialiser les filtres
+                  </motion.button>
+                </motion.div>
+              )}
+            </div>
           </div>
         </div>
-      )}
-    </motion.div>
+      </motion.div>
 
-     </> 
-  )
-}
+      {/* Modal Detail */}
+      <AnimatePresence>
+        {openIdx !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setOpenIdx(null)}
+            className="fixed inset-0 bg-black/60 flex justify-center items-center z-50 p-4"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.3 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white dark:bg-gray-800 rounded-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative shadow-2xl"
+            >
+              {/* Close Button */}
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setOpenIdx(null)}
+                className="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 z-10 bg-white dark:bg-gray-800 rounded-full p-2"
+              >
+                <X size={24} />
+              </motion.button>
 
-export default News
+              {/* Header with Image */}
+              <div className="relative h-80 overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600">
+                {!imageErrors[openIdx] && newsList[openIdx].image ? (
+                  <motion.img
+                    initial={{ scale: 1.1 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    src={newsList[openIdx].image}
+                    alt={newsList[openIdx].title}
+                    onError={() => handleImageError(openIdx)}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <ImageOff size={64} className="text-gray-400 dark:text-gray-500" />
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50" />
+                <div className="absolute bottom-4 left-6 right-6">
+                  <motion.span
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="inline-block bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs px-3 py-1 rounded-full font-medium"
+                  >
+                    {newsList[openIdx].category}
+                  </motion.span>
+                </div>
+              </div>
+
+              {/* Content */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="p-8"
+              >
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                  {newsList[openIdx].title}
+                </h2>
+
+                {/* Meta Info */}
+                <div className="flex flex-wrap gap-4 mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+                  <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                    <span className="font-medium">{newsList[openIdx].date}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                    <span className="font-medium">Par {newsList[openIdx].author}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                    <span className="font-medium">{newsList[openIdx].readTime} min de lecture</span>
+                  </div>
+                </div>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {newsList[openIdx].tags?.map((tag, i) => (
+                    <span
+                      key={i}
+                      className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Description */}
+                <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
+                  {newsList[openIdx].description}
+                </p>
+
+                {/* Details */}
+                <div className="space-y-3">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                    Points clés
+                  </h3>
+                  <ul className="space-y-3">
+                    {newsList[openIdx].details?.map((item, i) => (
+                      <motion.li
+                        key={i}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.1 }}
+                        className="flex gap-3 text-gray-700 dark:text-gray-300"
+                      >
+                        <span className="text-blue-600 dark:text-blue-400 font-bold flex-shrink-0">
+                          •
+                        </span>
+                        <span>{item}</span>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
+
+export default News;

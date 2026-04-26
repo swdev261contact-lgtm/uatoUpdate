@@ -1,310 +1,300 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar as CalendarIcon, Clock, MapPin, User, BookOpen, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar as CalendarIcon, ArrowRight, Filter, Clock, MapPin } from 'lucide-react';
+import { CalendarMonth } from '@mui/icons-material';
 import Navbar from '../components/Navbar';
-import { mockSchedules, mockEvents } from '../data/mockCalendarData';
-
-const MENTIONS = [
-  { value: 'INFORMATIQUE', label: 'Informatique', color: 'from-blue-600 to-cyan-600' },
-  { value: 'GENIE_CIVIL', label: 'Génie Civil', color: 'from-orange-600 to-red-600' },
-  { value: 'GESTION', label: 'Gestion', color: 'from-green-600 to-emerald-600' },
-  { value: 'COMMUNICATION', label: 'Communication', color: 'from-purple-600 to-pink-600' }
-];
-
-const LEVELS = ['L1', 'L2', 'L3', 'M1', 'M2'];
-const DAYS = ['LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI'];
-const TIME_SLOTS = [
-  { key: 'MATIN', label: '7h - 12h' },
-  { key: 'APRES_MIDI', label: '13h - 17h' }
-];
+import { newsList } from '../data/newsList';
+import BlogCard from '../components/BlogCard';
 
 const Calendrier = () => {
-  const [selectedMention, setSelectedMention] = useState('INFORMATIQUE');
-  const [selectedLevel, setSelectedLevel] = useState('L1');
-  const [schedules, setSchedules] = useState([]);
-  const [events] = useState(mockEvents);
-  const [loading, setLoading] = useState(false);
+  const [openIdx, setOpenIdx] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedMonth, setSelectedMonth] = useState('');
 
-  useEffect(() => {
-    const filteredSchedules = mockSchedules.filter(
-      schedule => schedule.mention === selectedMention &&
-                  schedule.level === selectedLevel &&
-                  schedule.is_available === true
-    );
-    setSchedules(filteredSchedules);
-  }, [selectedMention, selectedLevel]);
+  // Extract categories
+  const categories = [...new Set(newsList.map((item) => item.category))];
 
-  const getScheduleForSlot = (day, timeSlot) => {
-    return schedules.find(s => s.day === day && s.time_slot === timeSlot);
+  // Parse dates and sort by date
+  const parseDate = (dateStr) => {
+    const months = {
+      'janvier': 0, 'février': 1, 'mars': 2, 'avril': 3, 'mai': 4, 'juin': 5,
+      'juillet': 6, 'août': 7, 'septembre': 8, 'octobre': 9, 'novembre': 10, 'décembre': 11
+    };
+    const parts = dateStr.toLowerCase().split(' ');
+    const day = parseInt(parts[0]);
+    const month = months[parts[1]];
+    const year = parseInt(parts[2]);
+    return new Date(year, month, day);
   };
 
-  const hasSchedules = schedules.length > 0;
+  // Filter and sort events
+  const filteredEvents = useMemo(() => {
+    return newsList
+      .filter(item => !selectedCategory || item.category === selectedCategory)
+      .sort((a, b) => parseDate(a.date) - parseDate(b.date));
+  }, [selectedCategory]);
 
-  const selectedMentionData = MENTIONS.find(m => m.value === selectedMention);
-
-  const getEventTypeColor = (type) => {
-    switch (type) {
-      case 'ACADEMIQUE': return 'bg-blue-100 text-blue-800 border-blue-300';
-      case 'ADMINISTRATIF': return 'bg-gray-100 text-gray-800 border-gray-300';
-      case 'CULTUREL': return 'bg-purple-100 text-purple-800 border-purple-300';
-      case 'SPORTIF': return 'bg-green-100 text-green-800 border-green-300';
-      default: return 'bg-gray-100 text-gray-800 border-gray-300';
-    }
-  };
-
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('fr-FR', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+  // Group events by month
+  const eventsByMonth = useMemo(() => {
+    const grouped = {};
+    filteredEvents.forEach(event => {
+      const date = parseDate(event.date);
+      const monthKey = date.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+      if (!grouped[monthKey]) {
+        grouped[monthKey] = [];
+      }
+      grouped[monthKey].push(event);
     });
-  };
+    return grouped;
+  }, [filteredEvents]);
 
-  const upcomingEvents = events
-    .filter(event => new Date(event.event_date) >= new Date())
-    .slice(0, 5);
+  const monthsArray = Object.entries(eventsByMonth);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50 dark:from-dark-900 dark:via-dark-800 dark:to-dark-900">
-      <Navbar type="calendrier" />
+    <>
+      <Navbar type="blog" />
 
-      <section className="py-12 px-6">
-        <div className="container mx-auto max-w-7xl">
+      <motion.div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+        {/* Hero Section */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+          className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-pink-500 text-white"
+        >
+          {/* Animated Background */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-100 dark:bg-primary-900/20 rounded-full mb-4">
-              <CalendarIcon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
-              <span className="text-primary-700 dark:text-primary-300 font-medium">Calendrier Académique</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-              Emplois du Temps et <span className="bg-gradient-to-r from-primary-600 to-accent-gold bg-clip-text text-transparent">Événements</span>
-            </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-              Consultez les emplois du temps par mention et niveau, ainsi que les dates importantes de l'université
-            </p>
-          </motion.div>
+            animate={{ y: [0, -20, 0], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ duration: 8, repeat: Infinity }}
+            className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"
+          />
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                className="bg-white dark:bg-dark-800 rounded-2xl shadow-xl p-6 mb-8"
-              >
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
-                  <BookOpen className="w-7 h-7 text-primary-600" />
-                  Sélection du Parcours
-                </h2>
-
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-                      Mention
-                    </label>
-                    <div className="grid grid-cols-2 gap-3">
-                      {MENTIONS.map((mention) => (
-                        <button
-                          key={mention.value}
-                          onClick={() => setSelectedMention(mention.value)}
-                          className={`p-4 rounded-xl border-2 transition-all duration-300 ${
-                            selectedMention === mention.value
-                              ? `bg-gradient-to-r ${mention.color} text-white border-transparent shadow-lg scale-105`
-                              : 'bg-gray-50 dark:bg-dark-900 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-dark-700 hover:border-primary-300'
-                          }`}
-                        >
-                          <span className="font-semibold">{mention.label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
-                      Niveau
-                    </label>
-                    <div className="flex gap-3">
-                      {LEVELS.map((level) => (
-                        <button
-                          key={level}
-                          onClick={() => setSelectedLevel(level)}
-                          className={`flex-1 py-3 rounded-xl border-2 font-bold transition-all duration-300 ${
-                            selectedLevel === level
-                              ? 'bg-primary-600 text-white border-primary-600 shadow-lg scale-105'
-                              : 'bg-gray-50 dark:bg-dark-900 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-dark-700 hover:border-primary-300'
-                          }`}
-                        >
-                          {level}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="bg-white dark:bg-dark-800 rounded-2xl shadow-xl p-6"
-              >
-                <div className={`flex items-center gap-3 mb-6 p-4 rounded-xl bg-gradient-to-r ${selectedMentionData.color}`}>
-                  <BookOpen className="w-6 h-6 text-white" />
-                  <h2 className="text-2xl font-bold text-white">
-                    Emploi du Temps - {selectedMentionData.label} {selectedLevel}
-                  </h2>
-                </div>
-
-                {loading ? (
-                  <div className="text-center py-12">
-                    <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-primary-600 border-t-transparent"></div>
-                    <p className="mt-4 text-gray-600 dark:text-gray-400">Chargement...</p>
-                  </div>
-                ) : !hasSchedules ? (
-                  <div className="text-center py-12">
-                    <AlertCircle className="w-16 h-16 text-orange-500 mx-auto mb-4" />
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                      PAS DISPONIBLE
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400">
-                      L'emploi du temps pour {selectedMentionData.label} {selectedLevel} n'est pas encore disponible.
-                    </p>
-                  </div>
-                ) : (
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
-                      <thead>
-                        <tr className="bg-gray-100 dark:bg-dark-900">
-                          <th className="border border-gray-300 dark:border-dark-700 p-3 text-left font-bold text-gray-900 dark:text-white">
-                            Jour
-                          </th>
-                          {TIME_SLOTS.map(slot => (
-                            <th key={slot.key} className="border border-gray-300 dark:border-dark-700 p-3 text-center font-bold text-gray-900 dark:text-white">
-                              {slot.label}
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {DAYS.map((day) => (
-                          <tr key={day} className="hover:bg-gray-50 dark:hover:bg-dark-900/50 transition-colors">
-                            <td className="border border-gray-300 dark:border-dark-700 p-3 font-semibold text-gray-900 dark:text-white">
-                              {day.charAt(0) + day.slice(1).toLowerCase()}
-                            </td>
-                            {TIME_SLOTS.map(slot => {
-                              const schedule = getScheduleForSlot(day, slot.key);
-                              return (
-                                <td key={slot.key} className="border border-gray-300 dark:border-dark-700 p-3">
-                                  {schedule ? (
-                                    <div className="space-y-2">
-                                      <div className="flex items-start gap-2">
-                                        <BookOpen className="w-4 h-4 text-primary-600 flex-shrink-0 mt-0.5" />
-                                        <span className="font-semibold text-gray-900 dark:text-white text-sm">
-                                          {schedule.subject}
-                                        </span>
-                                      </div>
-                                      {schedule.teacher && (
-                                        <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
-                                          <User className="w-3 h-3" />
-                                          {schedule.teacher}
-                                        </div>
-                                      )}
-                                      {schedule.room && (
-                                        <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
-                                          <MapPin className="w-3 h-3" />
-                                          {schedule.room}
-                                        </div>
-                                      )}
-                                    </div>
-                                  ) : (
-                                    <span className="text-gray-400 dark:text-gray-600 text-sm">-</span>
-                                  )}
-                                </td>
-                              );
-                            })}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </motion.div>
-            </div>
-
+          <div className="relative z-10 max-w-7xl mx-auto px-6 py-24">
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="space-y-6"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-block mb-4 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-sm font-semibold flex items-center gap-2"
             >
-              <div className="bg-white dark:bg-dark-800 rounded-2xl shadow-xl p-6">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <CalendarIcon className="w-6 h-6 text-primary-600" />
-                  Événements à Venir
-                </h3>
+              <CalendarMonth sx={{ fontSize: 20 }} /> Calendrier des Événements
+            </motion.div>
 
-                {upcomingEvents.length === 0 ? (
-                  <p className="text-gray-600 dark:text-gray-400 text-center py-8">
-                    Aucun événement à venir
-                  </p>
-                ) : (
-                  <div className="space-y-4">
-                    {upcomingEvents.map((event) => (
-                      <div
-                        key={event.id}
-                        className={`p-4 rounded-xl border-2 ${getEventTypeColor(event.event_type)}`}
-                      >
-                        <div className="flex items-start justify-between mb-2">
-                          <h4 className="font-bold text-sm">{event.title}</h4>
-                          <span className="text-xs font-semibold px-2 py-1 rounded-full bg-white/50">
-                            {event.event_type}
-                          </span>
-                        </div>
-                        {event.description && (
-                          <p className="text-xs mb-2 opacity-80">{event.description}</p>
-                        )}
-                        <div className="flex items-center gap-2 text-xs font-medium">
-                          <Clock className="w-3 h-3" />
-                          {formatDate(event.event_date)}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6"
+            >
+              Calendrier Académique 2025
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-xl text-blue-100 mb-8 max-w-2xl"
+            >
+              Découvrez tous les événements, conférences, activités et dates importantes de l'année académique, organisés par mois
+            </motion.p>
+
+            {/* Quick Stats */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="grid grid-cols-3 gap-4 max-w-xl"
+            >
+              <div className="bg-white/10 backdrop-blur-md p-4 rounded-lg">
+                <div className="text-3xl font-bold">{filteredEvents.length}</div>
+                <div className="text-sm text-blue-100">Événements</div>
               </div>
-
-              <div className="bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl shadow-xl p-6 text-white">
-                <h3 className="text-xl font-bold mb-3">Légende</h3>
-                <div className="space-y-3 text-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-white"></div>
-                    <span>Matin: 7h - 12h</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded-full bg-white"></div>
-                    <span>Après-midi: 13h - 17h</span>
-                  </div>
-                  <div className="pt-3 border-t border-white/30">
-                    <p className="font-semibold mb-2">Types d'événements:</p>
-                    <div className="space-y-1 text-xs">
-                      <div>• Académique: Cours, examens</div>
-                      <div>• Administratif: Inscriptions, vacances</div>
-                      <div>• Culturel: Événements culturels</div>
-                      <div>• Sportif: Compétitions sportives</div>
-                    </div>
-                  </div>
-                </div>
+              <div className="bg-white/10 backdrop-blur-md p-4 rounded-lg">
+                <div className="text-3xl font-bold">{categories.length}</div>
+                <div className="text-sm text-blue-100">Catégories</div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-md p-4 rounded-lg">
+                <div className="text-3xl font-bold">{monthsArray.length}</div>
+                <div className="text-sm text-blue-100">Mois actifs</div>
               </div>
             </motion.div>
           </div>
+        </motion.div>
+
+        {/* Main Content */}
+        <div className="max-w-7xl mx-auto px-6 py-16">
+          {/* Filter Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-12"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <Filter size={24} className="text-blue-600" />
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Filtrer par catégorie</h2>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                onClick={() => setSelectedCategory('')}
+                className={`px-6 py-2 rounded-full font-semibold transition-all ${
+                  selectedCategory === ''
+                    ? 'bg-gradient-to-r from-blue-600 to-pink-500 text-white shadow-lg'
+                    : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-md'
+                }`}
+              >
+                Tous les événements
+              </motion.button>
+
+              {categories.map((category) => (
+                <motion.button
+                  key={category}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-6 py-2 rounded-full font-semibold transition-all ${
+                    selectedCategory === category
+                      ? 'bg-gradient-to-r from-blue-600 to-pink-500 text-white shadow-lg'
+                      : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:shadow-md'
+                  }`}
+                >
+                  {category}
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Timeline */}
+          <div className="space-y-12">
+            {monthsArray.map(([month, events], monthIdx) => (
+              <motion.div
+                key={month}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: monthIdx * 0.1 }}
+                viewport={{ once: true, amount: 0.3 }}
+              >
+                {/* Month Header */}
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="flex-1 h-1 bg-gradient-to-r from-blue-600 to-pink-500"></div>
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white whitespace-nowrap">
+                    {month.charAt(0).toUpperCase() + month.slice(1)}
+                  </h2>
+                  <div className="flex-1 h-1 bg-gradient-to-r from-pink-500 to-blue-600"></div>
+                </div>
+
+                {/* Events Grid */}
+                <motion.div
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                >
+                  {events.map((event, idx) => (
+                    <BlogCard
+                      key={idx}
+                      news={event}
+                      idx={idx}
+                      onClick={() => setOpenIdx(newsList.indexOf(event))}
+                    />
+                  ))}
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* No Results */}
+          {filteredEvents.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-center py-16"
+            >
+              <p className="text-xl text-gray-600 dark:text-gray-400">
+                Aucun événement trouvé pour cette catégorie
+              </p>
+            </motion.div>
+          )}
         </div>
-      </section>
-    </div>
+      </motion.div>
+
+      {/* Modal - Same as News */}
+      {openIdx !== null && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setOpenIdx(null)}
+          className="fixed inset-0 bg-black/60 flex justify-center items-center z-50 p-4"
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            onClick={(e) => e.stopPropagation()}
+            className="bg-white dark:bg-gray-800 rounded-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative shadow-2xl"
+          >
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setOpenIdx(null)}
+              className="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 z-10 bg-white dark:bg-gray-800 rounded-full p-2"
+            >
+              ✕
+            </motion.button>
+
+            <div className="relative h-80 overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-600">
+              <img
+                src={newsList[openIdx].image}
+                alt={newsList[openIdx].title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50" />
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="p-8"
+            >
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                {newsList[openIdx].title}
+              </h2>
+
+              <div className="flex flex-wrap gap-4 mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                  <Clock size={16} />
+                  {newsList[openIdx].date}
+                </div>
+                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                  <span>{newsList[openIdx].author}</span>
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">
+                  {newsList[openIdx].readTime} min
+                </div>
+              </div>
+
+              <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
+                {newsList[openIdx].description}
+              </p>
+
+              <ul className="space-y-3">
+                {newsList[openIdx].details?.map((item, i) => (
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="flex gap-3 text-gray-700 dark:text-gray-300"
+                  >
+                    <span className="text-blue-600 dark:text-blue-400 font-bold flex-shrink-0">•</span>
+                    <span>{item}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      )}
+    </>
   );
 };
 
