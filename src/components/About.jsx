@@ -197,7 +197,6 @@ const About = () => {
             </motion.div>
 
             <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
-<<<<<<< HEAD
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -207,11 +206,6 @@ const About = () => {
               >
                 Fondée en <span className="font-bold text-blue-600 dark:text-blue-400">2021</span>,
                 l'Université Privée d\'Ambohidratrimo est née d'une vision ambitieuse : démocratiser
-=======
-              <p>
-                Fondée en <span className="font-semibold text-primary-600 dark:text-primary-400">2021</span>,
-                l'Université Privée d'Ambohydratrimo est née d'une vision ambitieuse : démocratiser
->>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
                 l'accès à une éducation supérieure de qualité pour tous les jeunes malgaches.
               </motion.p>
               <motion.p
@@ -222,7 +216,6 @@ const About = () => {
                 className="text-lg"
               >
                 Démarrant avec deux programmes et une cinquantaine d'étudiants passionnés, l'UPA s'est
-<<<<<<< HEAD
                 rapidement imposée comme une référence dans le paysage éducatif malgache, combinant
                 excellence académique et innovation pédagogique.
               </motion.p>
@@ -238,15 +231,6 @@ const About = () => {
                 d'évoluer en créant des partenariats stratégiques avec des institutions internationales
                 pour offrir à nos étudiants les meilleures opportunités de carrière.
               </motion.p>
-=======
-                rapidement imposée comme une référence dans le paysage éducatif malgache.
-              </p>
-              <p>
-                Aujourd'hui, avec <span className="font-semibold text-primary-600 dark:text-primary-400">trois écoles spécialisées</span> et
-                plus de <span className="font-semibold text-primary-600 dark:text-primary-400">200 étudiants</span>, nous continuons
-                d'évoluer en créant des partenariats stratégiques.
-              </p>
->>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
             </div>
           </motion.div>
 
@@ -332,15 +316,7 @@ const About = () => {
                   pratiques et valeurs éthiques pour former les professionnels et leaders de demain.
                 </p>
               </div>
-<<<<<<< HEAD
             </motion.div>
-=======
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                Fournir une éducation supérieure de qualité exceptionnelle, accessible à tous les étudiants
-                malgaches, avec des programmes innovants qui allient excellence académique et valeurs éthiques.
-              </p>
-            </div>
->>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -364,15 +340,7 @@ const About = () => {
                   prêts à relever les défis du XXIe siècle.
                 </p>
               </div>
-<<<<<<< HEAD
             </motion.div>
-=======
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                Devenir l'institution de référence dans l'enseignement supérieur à Madagascar et dans
-                l'océan Indien, reconnue pour son excellence pédagogique et son innovation.
-              </p>
-            </div>
->>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
           </motion.div>
         </div>
 
@@ -392,7 +360,6 @@ const About = () => {
               className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6"
             >
               Nos Valeurs Fondamentales
-<<<<<<< HEAD
             </motion.h3>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -403,9 +370,6 @@ const About = () => {
             >
               Des principes qui guident notre mission éducative et façonnent l'expérience de nos étudiants
             </motion.p>
-=======
-            </h3>
->>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">

@@ -223,7 +223,6 @@ const VieEtudiante = () => {
   const openModal = (content) => setActiveModal(content);
   const closeModal = () => setActiveModal(null);
 
-<<<<<<< HEAD
   const getBadgeIcon = (iconName) => {
     const iconMap = {
   rocket: Rocket,
@@ -238,18 +237,6 @@ const VieEtudiante = () => {
   const filteredImages = selectedCategory === 'Tous'
     ? galleryImages
     : galleryImages.filter(img => img.category === selectedCategory);
-=======
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape') {
-        if (selectedImage) setSelectedImage(null);
-        else if (activeModal) closeModal();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [activeModal, selectedImage]);
->>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
 
   const scrollLeft = () => {
     if (containerRef.current) {
@@ -836,7 +823,6 @@ const VieEtudiante = () => {
             {filteredImages.map((img, idx) => (
               <motion.div
                 key={img.id}
-<<<<<<< HEAD
                 layout
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -851,22 +837,6 @@ const VieEtudiante = () => {
                     alt={img.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-=======
-                className="relative rounded-lg overflow-hidden cursor-pointer shadow-lg group"
-                whileHover={{ scale: 1.02, y: -4 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setSelectedImage(img)}
-              >
-                <img
-                  src={img.src}
-                  alt={img.title}
-                  className="w-full h-40 object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                  <p className="text-white font-medium text-sm">{img.title}</p>
-                  <p className="text-white/80 text-xs">{img.description}</p>
->>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
                 </div>
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -950,18 +920,13 @@ const VieEtudiante = () => {
         <AnimatePresence>
           {selectedImage && (
             <motion.div
-<<<<<<< HEAD
               className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4"
-=======
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[60] p-4"
->>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setSelectedImage(null)}
             >
               <motion.div
-<<<<<<< HEAD
                 className="relative max-w-4xl w-full max-h-[85vh] overflow-y-auto"
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
@@ -986,43 +951,6 @@ const VieEtudiante = () => {
                   <p className="text-lg text-gray-300 mb-2">{selectedImage.category}</p>
                   <p className="text-gray-400">{selectedImage.description}</p>
                 </div>
-=======
-                className="relative max-w-4xl w-full"
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <h4 className="text-xl font-semibold text-white">
-                    {selectedImage.title}
-                  </h4>
-                  <button
-                    onClick={() => setSelectedImage(null)}
-                    className="p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
-                  >
-                    <X size={24} className="text-white" />
-                  </button>
-                </div>
-                <motion.img
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 }}
-                  src={selectedImage.src}
-                  alt={selectedImage.title}
-                  className="w-full max-h-[70vh] object-contain rounded-lg shadow-2xl"
-                />
-                {selectedImage.description && (
-                  <motion.p 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                    className="mt-4 text-center text-white/90 text-lg"
-                  >
-                    {selectedImage.description}
-                  </motion.p>
-                )}
->>>>>>> dfd29cf5ec9415cbd74f96d0f7c4fb9930d72354
               </motion.div>
             </motion.div>
           )}
