@@ -1,7 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, BookOpen, Users, Award, ArrowRight } from 'lucide-react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  Container,
+  IconButton,
+  Stack,
+  Typography,
+} from '@mui/material';
+import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
+import Groups2RoundedIcon from '@mui/icons-material/Groups2Rounded';
+import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
+import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded';
 
 import welcomeImg1 from '../assets/upaSite.jpg';
 import welcomeImg2 from '../assets/welcome.jpg';
@@ -11,165 +26,86 @@ import welcomeImg5 from '../assets/loisirSalle.jpg';
 import welcomeImg6 from '../assets/infosalle.jpg';
 import miniLogoUpa from '../assets/UPAlogo.jpg';
 
-const Welcome = () => {
-  const images = [
-    welcomeImg1,
-    welcomeImg2,
-    welcomeImg3,
-    welcomeImg4,
-    welcomeImg5,
-    welcomeImg6
-  ];
+const highlights = [
+  { icon: <MenuBookRoundedIcon />, title: 'Programmes solides', desc: 'Formations orientées carrière' },
+  { icon: <Groups2RoundedIcon />, title: 'Communauté active', desc: 'Vie étudiante inclusive et dynamique' },
+  { icon: <WorkspacePremiumRoundedIcon />, title: 'Excellence', desc: 'Diplômes reconnus et accompagnement' },
+];
 
+const Welcome = () => {
+  const images = useMemo(() => [welcomeImg1, welcomeImg2, welcomeImg3, welcomeImg4, welcomeImg5, welcomeImg6], []);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 6000);
-
+    const interval = setInterval(() => setCurrentIndex((prev) => (prev + 1) % images.length), 6000);
     return () => clearInterval(interval);
   }, [images.length]);
 
-  const nextSlide = () =>
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-
-  const prevSlide = () =>
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-
-  const highlights = [
-    { icon: BookOpen, text: 'Programmes Académiques', color: 'from-blue-600 to-cyan-600' },
-    { icon: Users, text: 'Communauté Dynamique', color: 'from-primary-600 to-blue-600' },
-    { icon: Award, text: 'Excellence Reconnue', color: 'from-amber-600 to-orange-600' },
-  ];
-
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-gray-50 dark:from-gray-900 dark:to-gray-950">
-      <div className="max-w-7xl mx-auto px-6">
+    <Box component="section" className="bg-gradient-to-b from-slate-50 to-white py-20">
+      <Container maxWidth="xl">
+        <Box className="grid lg:grid-cols-2 gap-10 items-center">
+          <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+            <Chip label="À propos de l'UPA" color="primary" className="!mb-4" />
+            <Typography variant="h2" className="!text-4xl md:!text-5xl !font-bold !text-slate-900 !mb-4">
+              Une université pensée pour la génération numérique
+            </Typography>
+            <Typography className="!text-slate-600 !mb-7 !text-lg">
+              Campus moderne, pédagogie innovante et expériences concrètes pour préparer votre futur professionnel.
+            </Typography>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-
-          {/* TEXTE */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="inline-block mb-6 px-4 py-2 bg-blue-100 dark:bg-blue-900/30 rounded-full text-sm font-semibold">
-              <span className="text-blue-700 dark:text-blue-300">
-                À Propos de Nous
-              </span>
-            </div>
-
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Bienvenue à{" "}
-              <span className="bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
-                l'UPA
-              </span>
-            </h2>
-
-            <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
-              Notre université offre un environnement stimulant où les étudiants développent leurs compétences.
-            </p>
-
-            <p className="text-lg text-gray-700 dark:text-gray-300 mb-10">
-              Avec des programmes académiques rigoureux et des infrastructures modernes.
-            </p>
-
-            {/* HIGHLIGHTS */}
-            <div className="grid grid-cols-3 gap-4">
-              {highlights.map((item, idx) => (
-                <div key={idx}>
-                  <div className={`bg-gradient-to-br ${item.color} p-4 rounded-lg text-white`}>
-                    <item.icon className="w-6 h-6 mb-2" />
-                    <p className="text-sm font-semibold">{item.text}</p>
-                  </div>
-                </div>
+            <Stack spacing={2} className="mb-8">
+              {highlights.map((item) => (
+                <Card key={item.title} className="!rounded-2xl !shadow-sm hover:!shadow-md transition-shadow">
+                  <CardContent className="!flex !items-start !gap-4">
+                    <Box className="bg-blue-100 text-blue-700 rounded-xl p-2">{item.icon}</Box>
+                    <Box>
+                      <Typography className="!font-semibold !text-slate-900">{item.title}</Typography>
+                      <Typography className="!text-sm !text-slate-500">{item.desc}</Typography>
+                    </Box>
+                  </CardContent>
+                </Card>
               ))}
-            </div>
-          </motion.div>
+            </Stack>
 
-          {/* CARROUSEL */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative group"
-          >
-            <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
-
-              <motion.div
-                key={currentIndex}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                className="absolute inset-0"
-              >
-                <img
-                  src={images[currentIndex]}
-                  alt="Campus"
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/40" />
-
-              {/* LOGO */}
-              <div className="absolute bottom-4 left-4 bg-white/90 p-3 rounded-lg">
-                <img
-                  src={miniLogoUpa}
-                  alt="UPA Logo"
-                  className="w-16 h-16 object-cover rounded-lg"
-                />
-              </div>
-
-              {/* PREV */}
-              <button
-                onClick={prevSlide}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 p-3 rounded-full"
-              >
-                <ChevronLeft />
-              </button>
-
-              {/* NEXT */}
-              <button
-                onClick={nextSlide}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 p-3 rounded-full"
-              >
-                <ChevronRight />
-              </button>
-
-              {/* INDICATORS */}
-              <div className="absolute bottom-4 right-4 flex gap-2">
-                {images.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentIndex(idx)}
-                    className={`h-2 rounded-full transition-all ${
-                      idx === currentIndex ? 'bg-white w-8' : 'bg-white/50 w-2'
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-        </div>
-
-        {/* CTA */}
-        <div className="text-center mt-12">
-          <RouterLink to="/admission">
-            <button className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg font-semibold">
+            <Button component={RouterLink} to="/admission" variant="contained" endIcon={<ArrowForwardRoundedIcon />} className="!rounded-full !px-6 !py-3">
               Découvrir nos formations
-              <ArrowRight className="w-5 h-5" />
-            </button>
-          </RouterLink>
-        </div>
+            </Button>
+          </motion.div>
 
-      </div>
-    </section>
+          <motion.div initial={{ opacity: 0, x: 24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+            <Box className="relative h-[420px] rounded-3xl overflow-hidden shadow-2xl">
+              <img src={images[currentIndex]} alt="Campus UPA" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/45 to-transparent" />
+
+              <Box className="absolute top-4 right-4 bg-white/90 rounded-xl p-2">
+                <img src={miniLogoUpa} alt="UPA" className="w-14 h-14 rounded-lg object-cover" />
+              </Box>
+
+              <Box className="absolute inset-x-0 bottom-4 px-4 flex items-center justify-between">
+                <Box className="flex gap-2">
+                  <IconButton onClick={() => setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)} className="!bg-white/30 !text-white">
+                    <ChevronLeft />
+                  </IconButton>
+                  <IconButton onClick={() => setCurrentIndex((prev) => (prev + 1) % images.length)} className="!bg-white/30 !text-white">
+                    <ChevronRight />
+                  </IconButton>
+                </Box>
+                <Box className="flex gap-1.5">
+                  {images.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentIndex(idx)}
+                      className={`h-2 rounded-full transition-all ${idx === currentIndex ? 'w-8 bg-white' : 'w-2 bg-white/60'}`}
+                    />
+                  ))}
+                </Box>
+              </Box>
+            </Box>
+          </motion.div>
+        </Box>
+      </Container>
+    </Box>
   );
 };
 
