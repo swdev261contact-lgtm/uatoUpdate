@@ -43,7 +43,7 @@ const Welcome = () => {
 
   return (
     <Box component="section" className="bg-gradient-to-b from-slate-50 to-white py-20">
-      <Container maxWidth="xl">
+      <Container maxWidth={false} className="max-w-7xl mx-auto px-6">
         <Box className="grid lg:grid-cols-2 gap-10 items-center">
           <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <Chip label="À propos de l'UPA" color="primary" className="!mb-4" />

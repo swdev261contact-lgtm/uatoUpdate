@@ -25,7 +25,7 @@ const Hero = () => {
 
       <div className="absolute inset-0 bg-gradient-to-r from-dark-950/95 via-primary-900/80 to-transparent" />
 
-      <div className="relative z-10 container mx-auto px-6 py-20 lg:py-32">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 lg:py-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
