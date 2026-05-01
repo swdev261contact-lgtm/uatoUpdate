@@ -11,9 +11,9 @@ export default function ClubModal({ data, onClose }) {
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95, y: 20 }}
       transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-      className="bg-white dark:bg-gray-800 rounded-2xl max-w-5xl w-full max-h-[85vh] overflow-hidden shadow-2xl"
+      className="bg-white dark:bg-gray-800 modal-shell max-w-5xl w-full max-h-[88vh] overflow-hidden"
     >
-      <div className="flex justify-between items-center sticky p-5 z-20 top-0 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+      <div className="modal-header flex justify-between items-center bg-gradient-to-r from-purple-600 to-pink-600 text-white">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-white/20 rounded-lg">
             <Users className="w-6 h-6" />
@@ -31,14 +31,14 @@ export default function ClubModal({ data, onClose }) {
         </button>
       </div>
 
-      <div className="p-8 overflow-y-auto max-h-[calc(85vh-100px)]">
+      <div className="p-8 overflow-y-auto max-h-[calc(88vh-96px)]">
         <motion.img
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           src={data.image}
           alt={data.title}
-          className="w-full h-80 object-cover rounded-xl mb-6 shadow-lg"
+          className="w-full h-80 object-cover rounded-2xl mb-6 shadow-xl"
         />
 
         <motion.div

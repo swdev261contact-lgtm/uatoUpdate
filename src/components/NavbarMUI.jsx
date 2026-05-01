@@ -165,7 +165,7 @@ const NavbarMUI = ({ type = 'home' }) => {
           color: 'text.primary',
         }}
       >
-        <Container maxWidth="xl">
+        <Container maxWidth={false} className="section-container">
           <Toolbar
             disableGutters
             sx={{

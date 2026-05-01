@@ -67,7 +67,7 @@ const EventModal = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4"
+            className="fixed inset-0 bg-slate-950/70 backdrop-blur-md z-[60] flex items-center justify-center p-4"
             onClick={() => setIsOpen(false)}
           >
             <motion.div
@@ -75,10 +75,10 @@ const EventModal = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-              className="relative w-full max-w-lg bg-white dark:bg-dark-900 rounded-2xl shadow-2xl overflow-hidden"
+              className="relative w-full max-w-xl modal-shell overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className={`h-40 bg-gradient-to-r ${getEventTypeColor(closestEvent.event_type)} relative`}>
+              <div className={`h-44 bg-gradient-to-r ${getEventTypeColor(closestEvent.event_type)} relative`}>
                 <div className="absolute inset-0 bg-black/20" />
                 <div className="absolute top-4 right-4">
                   <span className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-white text-sm font-medium">
@@ -100,7 +100,7 @@ const EventModal = () => {
                 <X className="w-5 h-5 text-white" />
               </button>
 
-              <div className="p-6">
+              <div className="p-7">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
                   {closestEvent.title}
                 </h2>
