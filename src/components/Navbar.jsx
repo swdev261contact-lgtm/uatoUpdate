@@ -114,13 +114,13 @@ const Navbar = ({ type = 'home' }) => {
         borderBottom: '1px solid rgba(148, 163, 184, 0.2)',
       }}
     >
-      <Container maxWidth={false} className="max-w-7xl mx-auto px-6">
+      <Container maxWidth={false} className="section-container">
         <Toolbar disableGutters className="min-h-[72px] justify-between">
           <RouterLink to="/" className="flex items-center gap-3">
             <img src={logo} alt="Logo UPA" className="w-11 h-11 object-contain rounded-xl" />
             <Box>
-              <p className="font-bold text-slate-900 leading-tight">UPA</p>
-              <p className="text-xs text-slate-500">Université moderne</p>
+              <p className="font-bold text-slate-900 leading-tight tracking-tight">UPA</p>
+              <p className="text-xs text-slate-500">Université Privée d'Ambohistratimo</p>
             </Box>
           </RouterLink>
 

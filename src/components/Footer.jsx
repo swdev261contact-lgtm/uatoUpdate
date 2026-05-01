@@ -53,7 +53,7 @@ const Footer = () => {
     <footer className="relative bg-gradient-to-br from-dark-900 via-dark-950 to-black text-gray-300">
       <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5" />
 
-      <div className="relative max-w-7xl mx-auto px-6 py-16">
+      <div className="relative section-container py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div className="space-y-6">
             <div className="flex items-center gap-3">

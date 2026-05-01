@@ -12,7 +12,7 @@ const Hero = () => {
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-dark-950 via-dark-900 to-primary-950">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-[radial-gradient(circle_at_top_right,_#1d4ed8_0%,_#0f172a_45%,_#020617_100%)]">
       <div
         className="absolute inset-0 opacity-20"
         style={{
@@ -25,7 +25,7 @@ const Hero = () => {
 
       <div className="absolute inset-0 bg-gradient-to-r from-dark-950/95 via-primary-900/80 to-transparent" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-20 lg:py-32">
+      <div className="relative z-10 section-container py-20 lg:py-32">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -40,7 +40,7 @@ const Hero = () => {
               className="inline-block"
             >
               <span className="px-4 py-2 bg-primary-600/20 border border-primary-500/30 rounded-full text-primary-300 text-sm font-medium backdrop-blur-sm">
-                Formation d'Excellence
+                Université Privée d'Ambohistratimo
               </span>
             </motion.div>
 
@@ -50,9 +50,9 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight"
             >
-              <span className="text-white block mb-3">Façonnez votre</span>
+              <span className="text-white block mb-3">Là où commence votre</span>
               <span className="bg-gradient-to-r from-primary-400 via-primary-500 to-accent-gold bg-clip-text text-transparent">
-                Avenir Professionnel
+                Parcours d'Excellence
               </span>
             </motion.h1>
 
@@ -62,8 +62,7 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.5 }}
               className="text-lg md:text-xl text-gray-300 max-w-2xl leading-relaxed"
             >
-              Rejoignez l'Université Privée d'Ambohydratrimo et bénéficié d'une formation de qualité,
-              dispensée par des experts, dans un environnement moderne et innovant.
+              Rejoignez l'Université Privée d'Ambohistratimo pour une formation exigeante, humaine et orientée impact, encadrée par des experts du terrain.
             </motion.p>
 
             <motion.div

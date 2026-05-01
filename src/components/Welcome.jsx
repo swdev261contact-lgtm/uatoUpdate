@@ -27,9 +27,9 @@ import welcomeImg6 from '../assets/infosalle.jpg';
 import miniLogoUpa from '../assets/UPAlogo.jpg';
 
 const highlights = [
-  { icon: <MenuBookRoundedIcon />, title: 'Programmes solides', desc: 'Formations orientées carrière' },
-  { icon: <Groups2RoundedIcon />, title: 'Communauté active', desc: 'Vie étudiante inclusive et dynamique' },
-  { icon: <WorkspacePremiumRoundedIcon />, title: 'Excellence', desc: 'Diplômes reconnus et accompagnement' },
+  { icon: <MenuBookRoundedIcon />, title: 'Parcours professionnalisants', desc: 'Formations orientées carrière' },
+  { icon: <Groups2RoundedIcon />, title: 'Vie de campus engagée', desc: 'Vie étudiante inclusive et dynamique' },
+  { icon: <WorkspacePremiumRoundedIcon />, title: 'Accompagnement premium', desc: 'Diplômes reconnus et accompagnement' },
 ];
 
 const Welcome = () => {
@@ -43,15 +43,15 @@ const Welcome = () => {
 
   return (
     <Box component="section" className="bg-gradient-to-b from-slate-50 to-white py-20">
-      <Container maxWidth={false} className="max-w-7xl mx-auto px-6">
+      <Container maxWidth={false} className="section-container">
         <Box className="grid lg:grid-cols-2 gap-10 items-center">
           <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-            <Chip label="À propos de l'UPA" color="primary" className="!mb-4" />
+            <Chip label="Université Privée d'Ambohistratimo" color="primary" className="!mb-4" />
             <Typography variant="h2" className="!text-4xl md:!text-5xl !font-bold !text-slate-900 !mb-4">
-              Une université pensée pour la génération numérique
+              Bienvenue à l'Université Privée d'Ambohistratimo
             </Typography>
             <Typography className="!text-slate-600 !mb-7 !text-lg">
-              Campus moderne, pédagogie innovante et expériences concrètes pour préparer votre futur professionnel.
+              Un campus à taille humaine, une pédagogie d'excellence et une identité forte pour révéler votre potentiel.
             </Typography>
 
             <Stack spacing={2} className="mb-8">
@@ -69,7 +69,7 @@ const Welcome = () => {
             </Stack>
 
             <Button component={RouterLink} to="/admission" variant="contained" endIcon={<ArrowForwardRoundedIcon />} className="!rounded-full !px-6 !py-3">
-              Découvrir nos formations
+              Explorer nos parcours
             </Button>
           </motion.div>
 
